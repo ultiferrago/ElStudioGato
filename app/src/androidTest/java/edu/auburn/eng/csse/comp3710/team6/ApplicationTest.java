@@ -1,4 +1,4 @@
-package edu.auburn.eng.csse.comp3710.team06.elstudiogato;
+package edu.auburn.eng.csse.comp3710.team6;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

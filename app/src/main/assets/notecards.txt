@@ -1,0 +1,20 @@
+{
+   "notecards":[
+      {
+         "state":"Georgia",
+         "capital":"Atlanta"
+      },
+      {
+         "state":"Alabama",
+         "capital":"Montgomery"
+      },
+      {
+         "state":"Mississippi",
+         "capital":"Oxford"
+      },
+      {
+         "state":"Missouri",
+         "capital":"St. Louis"
+      }
+   ]
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/leader_cell"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="12dp">
+
+        <!-- Product id (pid) - will be HIDDEN - used to pass to other activity -->
+        <TextView
+            android:id="@+id/subject"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/body_text_medium"
+            android:text="Test ID"
+            android:textColor="@android:color/black"/>
+
+        <!-- Name Label -->
+        <TextView
+            android:id="@+id/section"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@id/subject"
+            android:layout_below="@id/subject"
+            android:paddingTop="6sp"
+            android:paddingLeft="60sp"
+            android:textSize="@dimen/body_text_large"
+            android:text="Test Score"
+            android:textStyle="bold"
+            android:textColor="@android:color/black" />
+    </RelativeLayout>
+
+</LinearLayout>
