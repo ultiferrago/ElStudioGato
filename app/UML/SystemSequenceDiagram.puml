@@ -16,9 +16,9 @@ System --> User : Display User Information
 
 group Picking Test Option
 User -> System : Pick Class
-User -> System : Pick Test
+User -> System : Pick "Test Me"
 
-System --> User : What Section?
+System --> User : Display Section
 User -> System : Pick Section
 
 System -> System : Load Cards
@@ -39,13 +39,10 @@ User -> System : Select Homepage
 end
 
 group Adding New Class Option
-System --> User : Display Homepage
-User -> System : Selects New Class
-System --> User : What Class?
+User -> System : Selects Add New Class
 User -> System : Enter Class Name
-System --> User : What Section?
 User -> System : Enter Section Information
-System --> User : Show Section Page
+System --> User : Display Section Page
 
 loop Until All Cards Added
 User -> System : Add New Card
