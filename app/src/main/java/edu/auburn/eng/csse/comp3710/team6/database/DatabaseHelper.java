@@ -22,7 +22,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     //Database infromation.
     private static final String DB_NAME = "StudyManager"; // Database name
-    private static final int VERSION = 0; // Used to rebuild database if we make changes to structure.
+    private static final int VERSION = 1; // Used to rebuild database if we make changes to structure.
 
     //Subject Table information.
     public static final String TABLE_SUBJECTS = "Subjects"; //This table should always be created.
@@ -38,6 +38,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_NOTES_KEY_FRONT = "Front";
     public static final String TABLE_NOTES_KEY_BACK = "Back";
     public static final String TABLE_NOTES_KEY_SECTION = "Section";
+    public static final String TABLE_NOTES_KEY_SUBJECT = "Subject";
 
     private Context m_context; //Context used to create this database.
 
@@ -49,9 +50,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * @return - instance of this class.
      */
     public static DatabaseHelper getInstance(Context context) {
-        if (m_instance == null)
+        if (m_instance == null) {
             m_instance = new DatabaseHelper(context);
-
+        }
         return m_instance;
     }
 
@@ -64,6 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, DB_NAME, null, VERSION);
         m_context = context;
         subjects = new ArrayList();
+        SQLiteDatabase db = this.getReadableDatabase();
     }
 
     /**
@@ -74,19 +76,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         //Creation statement. Table with id and name.
-        String CreateSubjectTable = "CREATE TABLE " + TABLE_SUBJECTS + " ("
+        String CreateSubjectTable = "CREATE TABLE IF NOT EXISTS " + TABLE_SUBJECTS + " ("
                 + TABLE_SUBJECTS_KEY_NAME + " TEXT"
                 + ")";
 
-        String CreateSectionsTable = "CREATE TABLE " + TABLE_SECTIONS + " ("
+        String CreateSectionsTable = "CREATE TABLE IF NOT EXISTS " + TABLE_SECTIONS + " ("
                 + TABLE_SECTION_KEY_SECTION + " TEXT, "
                 + TABLE_SECTIONS_KEY_SUBJECT + " TEXT"
                 + ")";
 
-        String CreateNotesTable = "CREATE TABLE " + TABLE_NOTES + " ("
+        String CreateNotesTable = "CREATE TABLE IF NOT EXISTS " + TABLE_NOTES + " ("
                 + TABLE_NOTES_KEY_FRONT + " TEXT, "
                 + TABLE_NOTES_KEY_BACK + " TEXT, "
-                + TABLE_NOTES_KEY_SECTION + " TEXT"
+                + TABLE_NOTES_KEY_SECTION + " TEXT, "
+                + TABLE_NOTES_KEY_SUBJECT + " TEXT"
                 + ")";
 
 
@@ -97,23 +100,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.i("Database", "Created all tables!");
     }
 
-    /**
-     * Checks if there is an upgrade needed if so it deletes all old stuff and recreates new.
-     * Currently I don't know how I want to do this so lets leave it blank.
-     * @param db - Database instance
-     * @param oldVersion - Version this device is on.
-     * @param newVersion - Version our code is on
-     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Implement schema changes and data massage here when upgrading
-
-        // While we are creating our app we can use the drop if exists method.
-
-        // Delete old tables if they exist
-
-        //Now recreate
-        //onCreate(db);
+        onCreate(db);
     }
 
     /**
@@ -159,6 +148,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     noteValues.put(TABLE_NOTES_KEY_FRONT, note.getFront());
                     noteValues.put(TABLE_NOTES_KEY_BACK, note.getBack());
                     noteValues.put(TABLE_NOTES_KEY_SECTION, section.getName());
+                    noteValues.put(TABLE_NOTES_KEY_SUBJECT, sub.getSubjectName());
                 }
 
             }
@@ -174,21 +164,82 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getReadableDatabase();
 
-        HashMap<String, Subject> subjectMap = new HashMap();
-
         Cursor cursor = db.query(TABLE_SUBJECTS, null, null, null, null, null, null);
 
         //Nothing in here.
         if (cursor == null) {
+            Log.i("Database", "Cursor was null");
+            //return null;
+        }
+
+        cursor.moveToFirst();
+        HashMap<String, Subject> tempMap = new HashMap();
+
+
+        //Go through and create a map of all the subjects.
+
+        while (!cursor.isAfterLast()) {
+            String subName = cursor.getString(0);
+            tempMap.put(subName, new Subject(subName));
+            cursor.moveToNext();
+        }
+
+        //Set cursor to new table.
+        cursor = db.query(TABLE_SECTIONS, null, null, null, null, null, null);
+
+        if (cursor == null) {
+            Log.i("Database", "Cursor for sections was null!");
+            //return null;
+        }
+
+        cursor.moveToFirst();
+
+        //Go through and add sections to correct subject.
+        while (!cursor.isAfterLast()) {
+            String sectionName = cursor.getString(0);
+            String subjectName = cursor.getString(1);
+            Section sec = new Section(sectionName);
+            Subject sub = tempMap.get(subjectName);
+            if (sub != null) {
+                sub.addSection(sec);
+            }
+            cursor.moveToNext();
+        }
+
+        //Set curosr to new table
+        cursor = db.query(TABLE_NOTES, null, null, null, null, null, null);
+
+        if (cursor == null) {
+            Log.i("Database", "Cursor for notes was null!");
             return null;
         }
 
+        cursor.moveToFirst();
 
-        for (cursor.moveToFirst(); cursor.isAfterLast(); cursor.moveToNext()) {
+        while (!cursor.isAfterLast()) {
+            String sectionName = cursor.getString(2);
+            String subjectName = cursor.getString(3);
 
+            String front = cursor.getString(0);
+            String back = cursor.getString(1);
+
+            Note note = new Note();
+            note.setFront(front);
+            note.setBack(back);
+
+            Subject sub = tempMap.get(subjectName);
+            if (sub != null) {
+                sub.getSection(sectionName).addNote(note);
+            }
+
+            cursor.moveToNext();
         }
 
+        cursor.close();
 
+        for (Subject sub : tempMap.values()) {
+            subjects.add(sub);
+        }
 
         return subjects;
     }

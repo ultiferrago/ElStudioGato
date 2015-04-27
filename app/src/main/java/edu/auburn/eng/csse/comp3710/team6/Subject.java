@@ -1,6 +1,8 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 
 /**
  * Created by Tyler Hoover on 4/25/15.
@@ -8,7 +10,7 @@ import java.util.ArrayList;
 public class Subject {
 
     private final String name; //Subject name ie Comp 3710
-    private final ArrayList<Section> sections; //Stores all sections
+    private final HashMap<String, Section> sections; //Stores all sections
 
     /**
      * Creates a new subject object. Typically used for new subjects
@@ -16,7 +18,7 @@ public class Subject {
      */
     public Subject(String name) {
         this.name = name;
-        sections = new ArrayList();
+        sections = new HashMap();
     }
 
     /**
@@ -26,7 +28,10 @@ public class Subject {
      */
     public Subject(String name, ArrayList<Section> sections) {
         this.name = name;
-        this.sections = sections;
+        this.sections = new HashMap();
+        for (Section sec : sections) {
+            this.sections.put(sec.getName(), sec);
+        }
     }
 
     /**
@@ -34,7 +39,7 @@ public class Subject {
      * @param section - Section to add to this subject.
      */
     public void addSection(Section section) {
-        sections.add(section);
+        sections.put(section.getName(), section);
     }
 
     /**
@@ -42,7 +47,8 @@ public class Subject {
      * @param sectionName - Name of section to create and add.
      */
     public void addSection(String sectionName) {
-        sections.add(new Section(sectionName));
+
+        sections.put(sectionName, new Section(sectionName));
     }
 
     /**
@@ -57,7 +63,15 @@ public class Subject {
      * Returns list of sections for this subject.
      * @return - List of sections.
      */
-    public ArrayList<Section> getSections() {
-        return (ArrayList<Section>)sections.clone();
+    public Collection<Section> getSections() {
+        return sections.values();
+    }
+
+    public Section getSection(String name) {
+       Section sec = sections.get(name);
+        if (sec == null) {
+            sec = new Section(name);
+        }
+        return sec;
     }
 }
