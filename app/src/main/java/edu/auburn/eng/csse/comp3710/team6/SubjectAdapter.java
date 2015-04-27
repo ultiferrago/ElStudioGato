@@ -9,34 +9,30 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Created by Tyler Hoover on 4/27/15.
  */
-public class SectionAdapter extends BaseAdapter {
+public class SubjectAdapter extends BaseAdapter {
 
-    private ArrayList<Section> sections;
+    private ArrayList<Subject> subjects;
     private Context ctx;
     private static LayoutInflater layoutInflater;
 
-    public SectionAdapter(Context ctx, Subject sub) {
-        sections = new ArrayList();
-        for (Section sec : sub.getSections()) {
-            sections.add(sec);
-        }
+    public SubjectAdapter(Context ctx, ArrayList<Subject> subjects) {
+        this.subjects = subjects;
         this.ctx = ctx;
         layoutInflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return sections.size();
+        return subjects.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return sections.get(position);
+        return subjects.get(position);
     }
 
     @Override
@@ -49,15 +45,14 @@ public class SectionAdapter extends BaseAdapter {
         View rowView = layoutInflater.inflate(R.layout.adapter_layout, null);
 
         TextView tv = (TextView) rowView.findViewById(R.id.SubjectText);
-        tv.setText(sections.get(position).getName());
+        tv.setText(subjects.get(position).getSubjectName());
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //A button was clicked launch the section fragment.
-                Log.i("SectionClick", sections.get(position).getName());
-
-
+                Log.i("SubjectClick", subjects.get(position).getSubjectName());
+                MainActivity.toSectionFragment(subjects.get(position));
             }
         });
         return rowView;
