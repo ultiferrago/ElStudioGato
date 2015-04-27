@@ -20,6 +20,9 @@
         <activity
             android:name=".NotecardActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".NotecardEditActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

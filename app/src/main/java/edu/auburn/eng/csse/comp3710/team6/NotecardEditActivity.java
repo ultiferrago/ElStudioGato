@@ -3,8 +3,7 @@ package edu.auburn.eng.csse.comp3710.team6;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,16 +21,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * Created by kennystreit on 4/24/15.
+ * Created by kennystreit on 4/26/15.
  */
-public class NotecardActivity extends ActionBarActivity {
+public class NotecardEditActivity extends ActionBarActivity {
 
+    /**
+     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
+     */
+    private CharSequence mTitle;
     private ArrayList<NotecardItem> notecardList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notecard_frag_holder);
+
+        mTitle = getTitle();
 
         JsonStorage jsonStorage = new JsonStorage(this);
         try {
@@ -51,26 +56,28 @@ public class NotecardActivity extends ActionBarActivity {
                     .add(R.id.container, new PlaceholderFragment(notecardList))
                     .commit();
         }
+
     }
+
+    public void restoreActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.notecard_menu, menu);
+        getMenuInflater().inflate(R.menu.menu_notecard_edit, menu);
+        restoreActionBar();
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.edit:
-                Toast.makeText(getApplicationContext(), "Edit Clicked!", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(getApplicationContext(), NotecardEditActivity.class);
-//                startActivity(intent);
-                createFragment(new NotecardEditFragment());
-                return true;
-            case R.id.delete:
-                Toast.makeText(getApplicationContext(), "Delete Clicked!", Toast.LENGTH_SHORT).show();
+            case R.id.save:
+                Toast.makeText(getApplicationContext(), "Save Clicked!", Toast.LENGTH_SHORT).show();
                 return true;
 
             default:
@@ -89,8 +96,25 @@ public class NotecardActivity extends ActionBarActivity {
 
         ArrayList<NotecardItem> notecardList = new ArrayList<>();
 
-        public PlaceholderFragment() {
-        }
+        /**
+         * The fragment argument representing the section number for this
+         * fragment.
+         */
+        private static final String ARG_SECTION_NUMBER = "section_number";
+
+        /**
+         * Returns a new instance of this fragment for the given section
+         * number.
+         */
+//        public static PlaceholderFragment newInstance(int sectionNumber) {
+//            PlaceholderFragment fragment = new PlaceholderFragment();
+//            Bundle args = new Bundle();
+//            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+//            fragment.setArguments(args);
+//            return fragment;
+//        }
+
+        public PlaceholderFragment(){}
 
         @SuppressLint("ValidFragment")
         public PlaceholderFragment(ArrayList<NotecardItem> notecardList) {
@@ -113,22 +137,11 @@ public class NotecardActivity extends ActionBarActivity {
             mRecyclerView.setLayoutManager(mLayoutManager);
 
             // specify an adapter (see also next example)
-            mAdapter = new NotecardAdapter(notecardList);
+            mAdapter = new NotecardEditAdapter(notecardList);
             mRecyclerView.setAdapter(mAdapter);
+
             return rootView;
         }
     }
 
-    /**
-     * Creates the fragment of your choice
-     * @param fragment fragment type (either MainHaikuFragment or DisplayHaikuFragment)
-     */
-    private void createFragment(Fragment fragment) {
-
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction transaction = fm.beginTransaction();
-        transaction.replace(R.id.container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
 }

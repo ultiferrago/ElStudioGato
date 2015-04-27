@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by kennystreit on 4/24/15.
  */
-public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHolder> {
+public class NotecardEditAdapter extends RecyclerView.Adapter<NotecardEditAdapter.ViewHolder> {
     private ArrayList<NotecardItem> notecardList;
 
     // Provide a reference to the views for each data item
@@ -21,24 +22,26 @@ public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
         public TextView mQuestion;
+        public TextView mAnswer;
         public ViewHolder(View v) {
             super(v);
-            mQuestion = (TextView) v.findViewById(R.id.question);
+            mQuestion = (EditText) v.findViewById(R.id.question);
+            mAnswer = (EditText) v.findViewById(R.id.answer);
         }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public NotecardAdapter(ArrayList<NotecardItem> notecardList) {
+    public NotecardEditAdapter(ArrayList<NotecardItem> notecardList) {
         this.notecardList = notecardList;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public NotecardAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                      int viewType) {
+    public NotecardEditAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
+                                                         int viewType) {
         // create a new view
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.notecard_layout, parent, false);
+                .inflate(R.layout.notecard_preview, parent, false);
 
         ViewHolder vh = new ViewHolder(v);
         return vh;
@@ -51,6 +54,7 @@ public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHo
         // - replace the contents of the view with that element
 
         holder.mQuestion.setText(notecardList.get(position).getState());
+        holder.mAnswer.setText(notecardList.get(position).getCapital());
         Log.d("KENNY", "Question: " + notecardList.get(position).getState());
     }
 
@@ -58,9 +62,5 @@ public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHo
     @Override
     public int getItemCount() {
         return notecardList.size();
-    }
-
-    public ArrayList<NotecardItem> getNotecardList() {
-        return notecardList;
     }
 }
