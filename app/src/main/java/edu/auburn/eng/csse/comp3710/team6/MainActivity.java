@@ -1,5 +1,6 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
@@ -20,6 +21,8 @@ public class MainActivity extends ActionBarActivity {
 
     public static ArrayList<Subject> subjects;
 
+    private static MainActivity instance;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,9 +30,10 @@ public class MainActivity extends ActionBarActivity {
         subjects = DatabaseHelper.getInstance(this).getSubjects();
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.main_frag_container, new MainFragment())
+                    .add(R.id.main_frag_container, new SubjectFragment())
                     .commit();
         }
+        instance = this;
     }
 
 
@@ -55,35 +59,49 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public static void toSectionFragment(Subject subject) {
+        instance.getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frag_container, new SectionFragment(subject))
+                .addToBackStack(null)
+                .commit();
+    }
+
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class MainFragment extends Fragment {
-        public MainFragment() {
+    public static class SubjectFragment extends Fragment {
+        public SubjectFragment() {
+
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.main_fragment, container, false);
 
             ListView lv = (ListView)rootView.findViewById(R.id.subjectView);
-            String[] items = new String[subjects.size()];
-            int i = 0;
-            for (Subject sub : subjects) {
-                items[i++] = sub.getSubjectName();
-            }
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this.getActivity(), android.R.layout.simple_list_item_1, items);
+            SubjectAdapter adapter = new SubjectAdapter(this.getActivity(), subjects);
             lv.setAdapter(adapter);
 
-            /*Button notecardFragButton = (Button) rootView.findViewById(R.id.gotonotecard);
-            notecardFragButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), NotecardActivity.class);
-                    startActivity(intent);
-                }
-            });*/
+            return rootView;
+        }
+    }
+
+    @SuppressLint("ValidFragment")
+    public static class SectionFragment extends Fragment {
+        Subject subject;
+        public SectionFragment(Subject subject) {
+            this.subject = subject;
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.main_fragment, container, false);
+
+            ListView lv = (ListView)rootView.findViewById(R.id.subjectView);
+            SectionAdapter adapter = new SectionAdapter(this.getActivity(), subject);
+            lv.setAdapter(adapter);
+
             return rootView;
         }
     }
