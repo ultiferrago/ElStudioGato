@@ -1,0 +1,42 @@
+@startuml
+User -> System : Selected Cards
+activate User
+activate System
+group Has Cards
+System -> Server : Request Information
+activate Server
+Server --> System : Return Information
+deactivate Server
+System --> User : Display Cards
+User -> System : Delete Card
+System --> User : Remove Card
+User -> System : Edit Card
+System -> Server : Request Save
+activate Server
+Server --> System: Save Information
+deactivate Server
+end
+
+group Has No Cards
+System --> User : Display Add Cards
+User -> System : Add Cards
+System -> Server : Request Save
+activate Server
+Server --> System: Save Information
+deactivate Server
+end
+
+group Go Through Test
+loop Until Done
+User -> System : Want Answer
+System --> User : Show Answer
+User -> System : Select Right or Wrong
+System --> User : Display New Statistics
+end
+System -> Server : Request Save
+activate Server
+Server --> System: Save Information
+deactivate Server
+end
+
+@enduml
