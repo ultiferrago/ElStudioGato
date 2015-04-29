@@ -25,7 +25,11 @@ public class NotecardEditFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    ArrayList<NotecardItem> notecardList = new ArrayList<>();
+    ArrayList<Note> notecardList = new ArrayList<>();
+
+    public NotecardEditFragment(ArrayList<Note> notes) {
+        this.notecardList = notes;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,7 +37,7 @@ public class NotecardEditFragment extends Fragment {
         super.onCreate(savedInstanceState);
         final View rootView = inflater.inflate(R.layout.notecard_fragment, container, false);
 
-        JsonStorage jsonStorage = new JsonStorage(getActivity());
+        /*JsonStorage jsonStorage = new JsonStorage(getActivity());
         try {
             String notecardJSON = jsonStorage.readNotecardsAsset();
             Log.d("KENNY", "Drink JSON: " + notecardJSON);
@@ -44,7 +48,7 @@ public class NotecardEditFragment extends Fragment {
         } catch (JSONException ej) {
             Log.d("KENNY", "JSON Failed: " + ej);
             ej.printStackTrace();
-        }
+        }*/
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
 

@@ -52,7 +52,7 @@ public class SubjectAdapter extends BaseAdapter {
             public void onClick(View v) {
                 //A button was clicked launch the section fragment.
                 Log.i("SubjectClick", subjects.get(position).getSubjectName());
-                MainActivity.toSectionFragment(subjects.get(position));
+                MainActivity.toSectionFragment(subjects.get(position), position);
             }
         });
         return rowView;

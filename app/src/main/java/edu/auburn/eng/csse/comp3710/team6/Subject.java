@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class Subject {
 
     private final String name; //Subject name ie Comp 3710
-    private final HashMap<String, Section> sections; //Stores all sections
+    private final ArrayList<Section> sections; //Stores all sections
 
     /**
      * Creates a new subject object. Typically used for new subjects
@@ -18,7 +18,7 @@ public class Subject {
      */
     public Subject(String name) {
         this.name = name;
-        sections = new HashMap();
+        sections = new ArrayList();
     }
 
     /**
@@ -28,10 +28,7 @@ public class Subject {
      */
     public Subject(String name, ArrayList<Section> sections) {
         this.name = name;
-        this.sections = new HashMap();
-        for (Section sec : sections) {
-            this.sections.put(sec.getName(), sec);
-        }
+        this.sections = sections;
     }
 
     /**
@@ -39,7 +36,7 @@ public class Subject {
      * @param section - Section to add to this subject.
      */
     public void addSection(Section section) {
-        sections.put(section.getName(), section);
+        sections.add(section);
     }
 
     /**
@@ -48,7 +45,7 @@ public class Subject {
      */
     public void addSection(String sectionName) {
 
-        sections.put(sectionName, new Section(sectionName));
+        sections.add(new Section(sectionName));
     }
 
     /**
@@ -63,15 +60,21 @@ public class Subject {
      * Returns list of sections for this subject.
      * @return - List of sections.
      */
-    public Collection<Section> getSections() {
-        return sections.values();
+    public ArrayList<Section> getSections() {
+        return sections;
     }
 
     public Section getSection(String name) {
-       Section sec = sections.get(name);
-        if (sec == null) {
-            sec = new Section(name);
-        }
+       Section sec = null;
+       for (Section temp : sections) {
+           if (temp.getName().equals(name)) {
+               sec = temp;
+           }
+       }
+       if (sec == null) {
+        sec = new Section(name);
+        sections.add(sec);
+       }
         return sec;
     }
 }

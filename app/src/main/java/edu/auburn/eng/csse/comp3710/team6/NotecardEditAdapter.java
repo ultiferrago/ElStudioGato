@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Created by kennystreit on 4/24/15.
  */
 public class NotecardEditAdapter extends RecyclerView.Adapter<NotecardEditAdapter.ViewHolder> {
-    private ArrayList<NotecardItem> notecardList;
+    private ArrayList<Note> notecardList;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -31,7 +31,7 @@ public class NotecardEditAdapter extends RecyclerView.Adapter<NotecardEditAdapte
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public NotecardEditAdapter(ArrayList<NotecardItem> notecardList) {
+    public NotecardEditAdapter(ArrayList<Note> notecardList) {
         this.notecardList = notecardList;
     }
 
@@ -53,9 +53,9 @@ public class NotecardEditAdapter extends RecyclerView.Adapter<NotecardEditAdapte
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        holder.mQuestion.setText(notecardList.get(position).getState());
-        holder.mAnswer.setText(notecardList.get(position).getCapital());
-        Log.d("KENNY", "Question: " + notecardList.get(position).getState());
+        holder.mQuestion.setText(notecardList.get(position).getFront());
+        holder.mAnswer.setText(notecardList.get(position).getBack());
+        Log.d("KENNY", "Question: " + notecardList.get(position).getFront());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

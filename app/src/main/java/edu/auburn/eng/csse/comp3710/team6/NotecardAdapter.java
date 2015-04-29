@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * Created by kennystreit on 4/24/15.
  */
 public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHolder> {
-    private ArrayList<NotecardItem> notecardList;
+    private ArrayList<Note> notecardList;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -28,7 +28,7 @@ public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHo
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public NotecardAdapter(ArrayList<NotecardItem> notecardList) {
+    public NotecardAdapter(ArrayList<Note> notecardList) {
         this.notecardList = notecardList;
     }
 
@@ -50,8 +50,8 @@ public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHo
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
-        holder.mQuestion.setText(notecardList.get(position).getState());
-        Log.d("KENNY", "Question: " + notecardList.get(position).getState());
+        holder.mQuestion.setText(notecardList.get(position).getFront());
+        Log.d("KENNY", "Question: " + notecardList.get(position).getFront());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -60,7 +60,7 @@ public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHo
         return notecardList.size();
     }
 
-    public ArrayList<NotecardItem> getNotecardList() {
+    public ArrayList<Note> getNotecardList() {
         return notecardList;
     }
 }

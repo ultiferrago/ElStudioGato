@@ -26,14 +26,14 @@ import java.util.ArrayList;
  */
 public class NotecardActivity extends ActionBarActivity {
 
-    private ArrayList<NotecardItem> notecardList = new ArrayList<>();
+    private ArrayList<Note> notecardList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notecard_frag_holder);
 
-        JsonStorage jsonStorage = new JsonStorage(this);
+        /*JsonStorage jsonStorage = new JsonStorage(this);
         try {
             String notecardJSON = jsonStorage.readNotecardsAsset();
             Log.d("KENNY", "Drink JSON: " + notecardJSON);
@@ -44,12 +44,16 @@ public class NotecardActivity extends ActionBarActivity {
         } catch (JSONException ej) {
             Log.d("KENNY", "JSON Failed: " + ej);
             ej.printStackTrace();
-        }
+        }*/
 
         if (savedInstanceState == null) {
+            int subPos = getIntent().getIntExtra("SubjectPos", 0);
+            int sectionPos = getIntent().getIntExtra("SectionPos", 0);
+            notecardList = MainActivity.subjects.get(subPos).getSections().get(sectionPos).getNoteCards();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment(notecardList))
                     .commit();
+            Log.i("Notecards", "Bundle was null");
         }
     }
 
@@ -67,7 +71,7 @@ public class NotecardActivity extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(), "Edit Clicked!", Toast.LENGTH_SHORT).show();
 //                Intent intent = new Intent(getApplicationContext(), NotecardEditActivity.class);
 //                startActivity(intent);
-                createFragment(new NotecardEditFragment());
+                createFragment(new NotecardEditFragment(notecardList));
                 return true;
             case R.id.delete:
                 Toast.makeText(getApplicationContext(), "Delete Clicked!", Toast.LENGTH_SHORT).show();
@@ -87,13 +91,14 @@ public class NotecardActivity extends ActionBarActivity {
         private RecyclerView.Adapter mAdapter;
         private RecyclerView.LayoutManager mLayoutManager;
 
-        ArrayList<NotecardItem> notecardList = new ArrayList<>();
+        ArrayList<Note> notecardList = new ArrayList<>();
 
         public PlaceholderFragment() {
+
         }
 
         @SuppressLint("ValidFragment")
-        public PlaceholderFragment(ArrayList<NotecardItem> notecardList) {
+        public PlaceholderFragment(ArrayList<Note> notecardList) {
             this.notecardList = notecardList;
         }
 

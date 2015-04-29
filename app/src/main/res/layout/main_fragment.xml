@@ -10,5 +10,6 @@
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/subjectView" />
+        android:id="@+id/subjectView"
+        android:touchscreenBlocksFocus="false" />
 </LinearLayout>

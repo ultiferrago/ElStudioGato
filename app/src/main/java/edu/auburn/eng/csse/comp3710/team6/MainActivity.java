@@ -15,6 +15,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 import edu.auburn.eng.csse.comp3710.team6.database.DatabaseHelper;
+import edu.auburn.eng.csse.comp3710.team6.database.DummyDatabase;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -28,6 +29,9 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         subjects = DatabaseHelper.getInstance(this).getSubjects();
+        if (subjects.isEmpty()) {
+            subjects = DummyDatabase.getDummySubjects();
+        }
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.main_frag_container, new SubjectFragment())
@@ -59,10 +63,10 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public static void toSectionFragment(Subject subject) {
+    public static void toSectionFragment(Subject subject, int position) {
         instance.getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_frag_container, new SectionFragment(subject))
+                .replace(R.id.main_frag_container, new SectionFragment(subject, position))
                 .addToBackStack(null)
                 .commit();
     }
@@ -90,8 +94,10 @@ public class MainActivity extends ActionBarActivity {
     @SuppressLint("ValidFragment")
     public static class SectionFragment extends Fragment {
         Subject subject;
-        public SectionFragment(Subject subject) {
+        private final int position;
+        public SectionFragment(Subject subject, int position) {
             this.subject = subject;
+            this.position = position;
         }
 
         @Override
@@ -99,7 +105,7 @@ public class MainActivity extends ActionBarActivity {
             View rootView = inflater.inflate(R.layout.main_fragment, container, false);
 
             ListView lv = (ListView)rootView.findViewById(R.id.subjectView);
-            SectionAdapter adapter = new SectionAdapter(this.getActivity(), subject);
+            SectionAdapter adapter = new SectionAdapter(this.getActivity(), subject, position);
             lv.setAdapter(adapter);
 
             return rootView;
