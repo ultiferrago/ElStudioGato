@@ -1,0 +1,28 @@
+@startuml
+Actor User
+Actor Storage
+
+rectangle System {
+User -- (Load Splash)
+(Load Splash) .. (Show Subject) : <<Extends>>
+(Show Subject) .. (Add Subject) : <<Extends>>
+(Show Subject) -- Storage
+(Show Section) -- Storage
+(Show Section) -- User
+(Show Section) .. (Add Section) : <<Extends>>
+(Show Cards) -- Storage
+(Show Cards) -- User
+(Show Cards) .. (Edit Cards) : <<Extends>>
+(Show Cards) .. (Delete Cards) : <<Extends>>
+(Show Cards) .. (Add Cards) : <<Extends>>
+(Show Cards) .. (Show Answer) : <<Extends>>
+(Show Answer) .. (Mark Wrong) : <<Extends>>
+(Show Answer) .. (Mark Right) : <<Extends>>
+(Mark Wrong) .. (Show Statics) : <<Extends>>
+(Mark Right) .. (Show Statics) : <<Extends>>
+(Show Statics) -- (Storage)
+}
+
+
+
+@enduml

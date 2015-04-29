@@ -1,0 +1,25 @@
+@startuml
+User -> System : Start Application
+activate User
+activate System
+group Has Subjects
+System -> Server : Request Information
+activate Server
+Server --> System : Return Information
+deactivate Server
+System --> User : Display Subjects
+User -> System : Select Subject
+end
+
+group Has No Subjects
+System --> User : Display Add Subject
+loop Until Done
+User -> System : Add Subject
+System -> Server : Request Save
+activate Server
+Server --> System: Save Information
+end
+deactivate Server
+end
+
+@enduml
