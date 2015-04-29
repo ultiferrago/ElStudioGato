@@ -13,10 +13,12 @@ end
 
 group Has No Subjects
 System --> User : Display Add Subject
+loop Until Done
 User -> System : Add Subject
 System -> Server : Request Save
 activate Server
 Server --> System: Save Information
+end
 deactivate Server
 end
 

@@ -13,10 +13,12 @@ end
 
 group Has No Sections
 System --> User : Display Add Sections
+loop Until Done
 User -> System : Add Sections
 System -> Server : Request Save
 activate Server
 Server --> System: Save Information
+end
 deactivate Server
 end
 
