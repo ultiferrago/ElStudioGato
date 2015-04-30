@@ -49,13 +49,13 @@ public class NotecardEditActivity extends ActionBarActivity {
         } catch (JSONException ej) {
             Log.d("KENNY", "JSON Failed: " + ej);
             ej.printStackTrace();
-        }
+        }*/
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment(notecardList))
                     .commit();
-        }*/
+        }
 
     }
 
