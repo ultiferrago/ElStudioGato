@@ -94,6 +94,14 @@ public class MainActivity extends ActionBarActivity {
             dialog.show(fm, "add_subject");
         }
 
+        if (id == R.id.menu_item_delete) {
+            getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frag_container, new OrganizationDeleteFragment())
+                .addToBackStack(null)
+                .commit();
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
