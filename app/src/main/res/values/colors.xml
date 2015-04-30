@@ -1,0 +1,7 @@
+<resources>
+    <color name="actionbar_color">#ac6934</color>
+    <color name="cat_color">#ff8c00</color>
+    <color name="green">#017f3f</color>
+    <color name="red">#ff0000</color>
+    <color name="cat_color_secondary">#d2691e</color>
+</resources>

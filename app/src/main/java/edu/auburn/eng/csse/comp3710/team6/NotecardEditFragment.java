@@ -31,6 +31,8 @@ public class NotecardEditFragment extends Fragment {
         this.notecardList = notes;
     }
 
+    public NotecardEditFragment() {}
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

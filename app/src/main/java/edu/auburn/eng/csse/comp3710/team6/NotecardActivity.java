@@ -118,7 +118,7 @@ public class NotecardActivity extends ActionBarActivity {
             mRecyclerView.setLayoutManager(mLayoutManager);
 
             // specify an adapter (see also next example)
-            mAdapter = new NotecardAdapter(notecardList);
+            mAdapter = new NotecardAdapter(notecardList, getActivity());
             mRecyclerView.setAdapter(mAdapter);
             return rootView;
         }
