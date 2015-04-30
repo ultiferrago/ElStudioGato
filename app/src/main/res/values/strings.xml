@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">Team 6</string>
 
+    <string name="dialog_add_subject_hint">Enter the name of the subject to create.</string>
+    <string name="dialog_add_subject_title">Create Subject</string>
+    <string name="dialog_add_section_hint">Enter the name of the section to create.</string>
+    <string name="dialog_add_section_title">Create Section</string>
+    <string name="dialog_create">Create</string>
+
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 </resources>

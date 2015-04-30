@@ -15,6 +15,11 @@ public class Note {
 
     }
 
+    public Note(String front, String back) {
+        this.front = front;
+        this.back = back;
+    }
+
     /**
      * Sets the front text of this card.
      * @param text - Text for front of card.

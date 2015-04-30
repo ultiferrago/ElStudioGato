@@ -29,7 +29,7 @@ public class NotecardEditActivity extends ActionBarActivity {
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
-    private ArrayList<NotecardItem> notecardList = new ArrayList<>();
+    private ArrayList<Note> notecardList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,18 +38,18 @@ public class NotecardEditActivity extends ActionBarActivity {
 
         mTitle = getTitle();
 
-        JsonStorage jsonStorage = new JsonStorage(this);
+        /*JsonStorage jsonStorage = new JsonStorage(this);
         try {
             String notecardJSON = jsonStorage.readNotecardsAsset();
             Log.d("KENNY", "Drink JSON: " + notecardJSON);
-            notecardList = jsonStorage.createNotecardItem(notecardJSON);
+            notecardList = jsonStorage.createNote(notecardJSON);
             Log.d("KENNY", "Success!");
         } catch (IOException e) {
             e.printStackTrace();
         } catch (JSONException ej) {
             Log.d("KENNY", "JSON Failed: " + ej);
             ej.printStackTrace();
-        }
+        }*/
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -94,7 +94,7 @@ public class NotecardEditActivity extends ActionBarActivity {
         private RecyclerView.Adapter mAdapter;
         private RecyclerView.LayoutManager mLayoutManager;
 
-        ArrayList<NotecardItem> notecardList = new ArrayList<>();
+        ArrayList<Note> notecardList = new ArrayList<>();
 
         /**
          * The fragment argument representing the section number for this
@@ -117,7 +117,7 @@ public class NotecardEditActivity extends ActionBarActivity {
         public PlaceholderFragment(){}
 
         @SuppressLint("ValidFragment")
-        public PlaceholderFragment(ArrayList<NotecardItem> notecardList) {
+        public PlaceholderFragment(ArrayList<Note> notecardList) {
             this.notecardList = notecardList;
         }
 

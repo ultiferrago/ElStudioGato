@@ -16,18 +16,23 @@
         android:background="@drawable/list_button"
         android:paddingBottom="6dp"
         android:paddingTop="6dp"
-        android:paddingLeft="40dp"
-        android:paddingRight="40dp">
+        android:paddingLeft="5dp"
+        android:paddingRight="40dp"
+        android:weightSum="1">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/item_delete_box" />
 
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/SubjectText"
-            android:textColor="#ffffff"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/item_delete_name"
+            android:textColor="#FFFFFFFF"
             android:textSize="22sp"
-            android:layout_marginTop="4dp"
-            android:padding="4dp"
-            android:gravity="center" />
+            android:layout_weight="4" />
     </LinearLayout>
 </LinearLayout>

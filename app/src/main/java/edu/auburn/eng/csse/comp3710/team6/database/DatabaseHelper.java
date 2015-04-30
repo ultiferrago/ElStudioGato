@@ -125,9 +125,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Writes the current cached information into the database.
      */
-    public void saveDatabase() {
+    public void saveDatabase(ArrayList<Subject> subjects) {
+        Log.i("Database", "Saving database");
         SQLiteDatabase db = this.getWritableDatabase(); //Database
 
+        //We want to make sure the database matches perfectly so lets just delete everything in the table and rewrite it.
+        db.execSQL("delete from "+ TABLE_SUBJECTS);
+        db.execSQL("delete from "+ TABLE_SECTIONS);
+        db.execSQL("delete from "+ TABLE_NOTES);
         //Go through every subject
         for (Subject sub : subjects) {
 
@@ -149,11 +154,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     noteValues.put(TABLE_NOTES_KEY_BACK, note.getBack());
                     noteValues.put(TABLE_NOTES_KEY_SECTION, section.getName());
                     noteValues.put(TABLE_NOTES_KEY_SUBJECT, sub.getSubjectName());
+                    db.insert(TABLE_NOTES, null, noteValues);
                 }
 
             }
 
         }
+        Log.i("Database", "Database saved!");
     }
 
     public ArrayList<Subject> getSubjects() {

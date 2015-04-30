@@ -1,6 +1,8 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +21,11 @@ public class SectionAdapter extends BaseAdapter {
     private ArrayList<Section> sections;
     private Context ctx;
     private static LayoutInflater layoutInflater;
+    private int subjectPosition;
 
-    public SectionAdapter(Context ctx, Subject sub) {
+    public SectionAdapter(Context ctx, Subject sub, int subjectPosition) {
         sections = new ArrayList();
+        this.subjectPosition = subjectPosition;
         for (Section sec : sub.getSections()) {
             sections.add(sec);
         }
@@ -56,8 +60,11 @@ public class SectionAdapter extends BaseAdapter {
             public void onClick(View v) {
                 //A button was clicked launch the section fragment.
                 Log.i("SectionClick", sections.get(position).getName());
+                Intent intent = new Intent(ctx, NotecardActivity.class);
+                intent.putExtra("SubjectPos", subjectPosition);
+                intent.putExtra("SectionPos", position);
 
-
+                ctx.startActivity(intent);
             }
         });
         return rowView;
