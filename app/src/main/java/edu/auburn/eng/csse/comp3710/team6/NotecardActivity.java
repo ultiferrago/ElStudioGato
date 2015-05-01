@@ -183,6 +183,7 @@ public class NotecardActivity extends ActionBarActivity {
                                 Toast.makeText(getActivity(),
                                         "Your notecard was saved!\nRow ID: " + newRowId,
                                         Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
                             } else
                                 Toast.makeText(getActivity(),
                                         "You must enter a question and/or answer",
@@ -222,7 +223,6 @@ public class NotecardActivity extends ActionBarActivity {
         for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
             if (c.getString(iSection).equals(sectionName)) {
                 result.add(new Note(c.getString(iFront), c.getString(iBack)));
-                Toast.makeText(getApplicationContext(), "Front:: " + iFront, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getApplicationContext(), "No section found:: " + sectionName
                         + ", db section: " + c.getString(iSection), Toast.LENGTH_SHORT).show();
