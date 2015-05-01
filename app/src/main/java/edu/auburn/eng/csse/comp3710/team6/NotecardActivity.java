@@ -1,6 +1,10 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,12 +18,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.ArrayList;
+
+import edu.auburn.eng.csse.comp3710.team6.database.DatabaseHelper;
 
 /**
  * Created by kennystreit on 4/24/15.
@@ -28,10 +33,16 @@ public class NotecardActivity extends ActionBarActivity {
 
     private ArrayList<Note> notecardList = new ArrayList<>();
 
+    DatabaseHelper dbHelper;
+    SQLiteDatabase myDB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notecard_frag_holder);
+
+        dbHelper = DatabaseHelper.getInstance(getApplicationContext());
+        myDB = dbHelper.getWritableDatabase();
 
         /*JsonStorage jsonStorage = new JsonStorage(this);
         try {
@@ -49,11 +60,19 @@ public class NotecardActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             int subPos = getIntent().getIntExtra("SubjectPos", 0);
             int sectionPos = getIntent().getIntExtra("SectionPos", 0);
-            notecardList = MainActivity.subjects.get(subPos).getSections().get(sectionPos).getNoteCards();
+            Bundle bundle = this.getIntent().getExtras();
+            String sectionName = bundle.getString("sectionName");
+//            notecardList = MainActivity.subjects.get(subPos).getSections().get(sectionPos).getNoteCards();
+            Bundle bundleOutgoing = new Bundle();
+            bundleOutgoing.putString("sectionName", sectionName);
+            notecardList = getData(sectionName);
+            PlaceholderFragment frag = new PlaceholderFragment(notecardList);
+            frag.setArguments(bundleOutgoing);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment(notecardList))
+                    .add(R.id.container, frag)
                     .commit();
             Log.i("Notecards", "Bundle was null");
+            Log.d("KENNY", "Section Name: " + sectionName);
         }
     }
 
@@ -107,6 +126,8 @@ public class NotecardActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.notecard_fragment, container, false);
 
+            final String sectionName = getArguments().getString("sectionName");
+
             mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
 
             // use this setting to improve performance if you know that changes
@@ -118,9 +139,59 @@ public class NotecardActivity extends ActionBarActivity {
             mRecyclerView.setLayoutManager(mLayoutManager);
 
             // specify an adapter (see also next example)
-            mAdapter = new NotecardAdapter(notecardList, getActivity());
+            mAdapter = new NotecardAdapter(notecardList);
             mRecyclerView.setAdapter(mAdapter);
+
+            ImageView fab = (ImageView) rootView.findViewById(R.id.floating_action_button);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    createNoteDialog(sectionName);
+                }
+            });
             return rootView;
+        }
+
+        private void createNoteDialog(final String sectionName) {
+
+            final Dialog dialog = new Dialog(getActivity());
+            dialog.setContentView(R.layout.notecard_dialog_layout);
+            dialog.setTitle("Create Your Notecard:");
+
+            final EditText question = (EditText) dialog.findViewById(R.id.question);
+            final EditText answer = (EditText) dialog.findViewById(R.id.answer);
+            dialog.findViewById(R.id.save_notecard).setOnClickListener(
+                    new View.OnClickListener() {
+                        @Override
+                        public void onClick(View arg0) {
+                            // create new item from dialog text
+                            if (!question.getText().toString().equals("") && !answer.getText().toString().equals("")) {
+
+                                DatabaseHelper dbHelper = DatabaseHelper.getInstance(getActivity());
+                                SQLiteDatabase myDB = dbHelper.getWritableDatabase();
+                                ContentValues values = dbHelper.saveNotecardValues(
+                                        question.getText().toString(),
+                                        answer.getText().toString(),
+                                        sectionName,
+                                        MainActivity.currentSub.getSubjectName());
+
+                                long newRowId = myDB.insert(
+                                        dbHelper.TABLE_NOTES,
+                                        null,
+                                        values);
+
+                                Toast.makeText(getActivity(),
+                                        "Your notecard was saved!\nRow ID: " + newRowId,
+                                        Toast.LENGTH_SHORT).show();
+                            } else
+                                Toast.makeText(getActivity(),
+                                        "You must enter a question and/or answer",
+                                        Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
+            dialog.setCanceledOnTouchOutside(true);
+            dialog.show();
         }
     }
 
@@ -135,5 +206,28 @@ public class NotecardActivity extends ActionBarActivity {
         transaction.replace(R.id.container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public ArrayList<Note> getData(String sectionName) {
+
+        String[]columns = new String[]{ dbHelper.TABLE_NOTES_KEY_FRONT,
+                dbHelper.TABLE_NOTES_KEY_BACK, dbHelper.TABLE_NOTES_KEY_SECTION, dbHelper.TABLE_NOTES_KEY_SUBJECT};
+        Cursor c = myDB.query(dbHelper.TABLE_NOTES, columns, null, null, null, null, null);
+        Log.d("KENNY", "Query: " + c.toString());
+        ArrayList<Note> result = new ArrayList<>();
+        int iFront = c.getColumnIndex(dbHelper.TABLE_NOTES_KEY_FRONT);
+        int iBack = c.getColumnIndex(dbHelper.TABLE_NOTES_KEY_BACK);
+        int iSection = c.getColumnIndex(dbHelper.TABLE_NOTES_KEY_SECTION);
+
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            if (c.getString(iSection).equals(sectionName)) {
+                result.add(new Note(c.getString(iFront), c.getString(iBack)));
+                Toast.makeText(getApplicationContext(), "Front:: " + iFront, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "No section found:: " + sectionName
+                        + ", db section: " + c.getString(iSection), Toast.LENGTH_SHORT).show();
+            }
+        }
+        return result;
     }
 }

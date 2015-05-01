@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import edu.auburn.eng.csse.comp3710.team6.database.DatabaseHelper;
-import edu.auburn.eng.csse.comp3710.team6.database.DummyDatabase;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -27,6 +26,8 @@ public class MainActivity extends ActionBarActivity {
 
     private static MainActivity instance; //Static instance workaround, bad practice I know, but I needed a quick fix.
 
+    private ArrayList<Subject> subjectArray;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +35,17 @@ public class MainActivity extends ActionBarActivity {
 
         //Will move all this to splash screen. //////////////////////
         subjects = DatabaseHelper.getInstance(this).getSubjects(); //
-        if (subjects.isEmpty()) {                                  //
-            subjects = DummyDatabase.getDummySubjects();           //
-        }                                                          //
+//        if (subjects.isEmpty()) {                                  //
+//            subjects = DummyDatabase.getDummySubjects();           //
+//        }                                                          //
         /////////////////////////////////////////////////////////////
+
+
+        DatabaseHelper dbHelper = DatabaseHelper.getInstance(this);
+        subjectArray = dbHelper.getAllSubjects();
+
+
+
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -49,21 +57,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        DatabaseHelper.getInstance(this).saveDatabase(subjects);
-    }
-
-    @Override
     public void onSaveInstanceState(Bundle bundle) {
         super.onSaveInstanceState(bundle);
-        DatabaseHelper.getInstance(this).saveDatabase(subjects);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        DatabaseHelper.getInstance(this).saveDatabase(subjects);
+//        DatabaseHelper.getInstance(this).saveDatabase(subjects);
     }
 
 
@@ -91,6 +87,10 @@ public class MainActivity extends ActionBarActivity {
 
             FragmentManager fm = this.getSupportFragmentManager();
             AddDialog dialog = new AddDialog();
+            Bundle bundle = new Bundle();
+            if (currentSub != null) bundle.putString("subjectName", currentSub.getSubjectName());
+            else bundle.putString("subjectName", "");
+            dialog.setArguments(bundle);
             dialog.show(fm, "add_subject");
         }
 
@@ -106,14 +106,17 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public static void toSectionFragment(Subject subject) {
-                currentSub = subject;
+        currentSub = subject;
 
-                instance.getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_frag_container, new SectionFragment(subject))
-                .addToBackStack(null)
-                .commit();
+        instance.getSupportFragmentManager()
+            .beginTransaction()
+            .replace(R.id.main_frag_container, new SectionFragment(subject))
+            .addToBackStack(null)
+            .commit();
     }
 
+    public void getAllSubjects() {
+
+    }
 
 }

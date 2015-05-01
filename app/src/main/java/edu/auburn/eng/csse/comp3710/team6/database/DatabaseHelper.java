@@ -251,5 +251,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return subjects;
     }
 
+    public ContentValues saveNotecardValues(String question, String answer, String section, String subject) {
+        ContentValues values = new ContentValues();
+        values.put(TABLE_NOTES_KEY_FRONT, question);
+        values.put(TABLE_NOTES_KEY_BACK, answer);
+        values.put(TABLE_NOTES_KEY_SECTION, section);
+        values.put(TABLE_NOTES_KEY_SUBJECT, subject);
+
+        return values;
+    }
+
+    public ContentValues saveSubjectValues(String subjectName) {
+        ContentValues values = new ContentValues();
+        values.put(TABLE_SUBJECTS_KEY_NAME, subjectName);
+
+        return values;
+    }
+
+    public ContentValues saveSectionValues(String sectionName, String sectionSubject) {
+        ContentValues values = new ContentValues();
+        values.put(TABLE_SECTION_KEY_SECTION, sectionName);
+        values.put(TABLE_SECTIONS_KEY_SUBJECT, sectionSubject);
+
+        return values;
+    }
+
+    public ArrayList<Subject> getAllSubjects() {
+
+        String[]columns = new String[]{ TABLE_SUBJECTS_KEY_NAME};
+        SQLiteDatabase myDB = this.getReadableDatabase();
+        Cursor c = myDB.query(TABLE_SUBJECTS, columns, null, null, null, null, null);
+        ArrayList<Subject> result = new ArrayList<>();
+
+        int iSubject = c.getColumnIndex(TABLE_SUBJECTS_KEY_NAME);
+
+        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
+            result.add(new Subject(c.getString(iSubject)));
+        }
+
+        return result;
+    }
+
+
 
 }

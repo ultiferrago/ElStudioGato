@@ -1,6 +1,5 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
-import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
  */
 public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHolder> {
     private ArrayList<Note> notecardList;
-    private Activity activity;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -37,9 +35,8 @@ public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHo
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public NotecardAdapter(ArrayList<Note> notecardList, Activity activity) {
+    public NotecardAdapter(ArrayList<Note> notecardList) {
         this.notecardList = notecardList;
-        this.activity = activity;
     }
 
     // Create new views (invoked by the layout manager)
@@ -68,8 +65,8 @@ public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHo
                         "Question:: " + notecardList.get(position).getFront(),
                                Toast.LENGTH_SHORT).show();
                 holder.mQuestion.setText(notecardList.get(position).getBack());
-                activity.findViewById(R.id.correct).setVisibility(View.VISIBLE);
-                activity.findViewById(R.id.incorrect).setVisibility(View.VISIBLE);
+                holder.correct.setVisibility(View.VISIBLE);
+                holder.incorrect.setVisibility(View.VISIBLE);
             }
         });
 
