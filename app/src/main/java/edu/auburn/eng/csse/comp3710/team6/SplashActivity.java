@@ -5,19 +5,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import edu.auburn.eng.csse.comp3710.team6.database.DatabaseHelper;
+import edu.auburn.eng.csse.comp3710.team6.database.DummyDatabase;
+
 /**
  * Created by kennystreit on 4/29/15.
  */
 public class SplashActivity extends Activity {
 
     /** Duration of wait **/
-    private final int SPLASH_DISPLAY_LENGTH = 2000;
+    private final int SPLASH_DISPLAY_LENGTH = 2000; //Increased time.
+    private final boolean fakeData = false;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.splash_layout);
+
+        //Real quick lets initialize the database.
+        MainActivity.subjects = DatabaseHelper.getInstance(this).getSubjects();
+        if (MainActivity.subjects.isEmpty() && fakeData) {
+            MainActivity.subjects = DummyDatabase.getDummySubjects();
+        }
 
         /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/

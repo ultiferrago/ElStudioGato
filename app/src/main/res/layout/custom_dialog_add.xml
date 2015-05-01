@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#FFF6D4">
+
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="100dp"
+        android:id="@+id/imageView"
+        android:background="@drawable/peekdown"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Title Name"
+        android:id="@+id/custom_dialog_title"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textSize="30sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:id="@+id/custom_dialog_edit_text"
+        android:hint="Replace me"
+        android:inputType="text" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:id="@+id/custom_dialog_cancel_button"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create"
+            android:id="@+id/custom_dialog_create_button"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>

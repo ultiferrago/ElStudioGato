@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="wrap_content"
+    android:orientation="vertical" android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:paddingTop="2dp"
     android:paddingBottom="2dp">
@@ -20,19 +20,10 @@
         android:paddingRight="40dp"
         android:weightSum="1">
 
-        <CheckBox
+        <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/item_delete_box" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/item_delete_name"
-            android:textColor="#FFFFFFFF"
-            android:textSize="22sp"
-            android:layout_weight="4" />
+            android:text="Delete Item"
+            android:id="@+id/radioButton" />
     </LinearLayout>
 </LinearLayout>

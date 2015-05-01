@@ -47,8 +47,12 @@ public class NotecardActivity extends ActionBarActivity {
         }*/
 
         if (savedInstanceState == null) {
-            int subPos = getIntent().getIntExtra("SubjectPos", 0);
-            int sectionPos = getIntent().getIntExtra("SectionPos", 0);
+            int subPos = getIntent().getIntExtra(MainActivity.SUBJECT_POSITION_KEY, 0);
+            int sectionPos = getIntent().getIntExtra(MainActivity.SECTION_POSITION_KEY, 0);
+            ArrayList<Subject> subjects = getIntent().getParcelableArrayListExtra("SubjectArray");
+            for (Subject quinnsMom : subjects) {
+                Toast.makeText(this, quinnsMom.getSubjectName(), Toast.LENGTH_SHORT).show();
+            }
             notecardList = MainActivity.subjects.get(subPos).getSections().get(sectionPos).getNoteCards();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment(notecardList))

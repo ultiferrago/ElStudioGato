@@ -1,9 +1,12 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Tyler Hoover on 4/25/15.
  */
-public class Note {
+public class Note implements Parcelable{
 
     private String front; //What is on the front of the study card.
     private String back; //What is on the back of the study card.
@@ -56,6 +59,34 @@ public class Note {
             return "";
         }
         return back;
+    }
+
+
+
+    ////////////////////////////////////////////////////////////////
+    public static final Parcelable.Creator<Note> CREATOR = new Parcelable.Creator<Note>() {
+        public Note createFromParcel(Parcel in) {
+            return new Note(in);
+        }
+
+        public Note[] newArray(int size) {
+            return new Note[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
+
+    private Note(Parcel in) {
+        front = in.readString();
+        back = in.readString();
     }
 
 

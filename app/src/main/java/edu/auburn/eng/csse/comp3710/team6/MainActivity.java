@@ -1,10 +1,13 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -16,7 +19,10 @@ public class MainActivity extends ActionBarActivity {
 
     public static final String FRAGMENT_SUBJECT = "SubjectFragment";
     public static final String FRAGMENT_SECTION = "SectionFragment";
-    public static String currentFrag = ""; //Current frag for use with add button.
+
+    public static final String SUBJECT_POSITION_KEY = "SubjectPosition";
+    public static final String SECTION_POSITION_KEY = "SectionPosition";
+
     public static Subject currentSub = null;
 
     public static ArrayList<Subject> subjects; //Cached list of subjects
@@ -40,9 +46,7 @@ public class MainActivity extends ActionBarActivity {
         /////////////////////////////////////////////////////////////
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.main_frag_container, new SubjectFragment())
-                    .commit();
+            toSubjectFragment();
         }
         instance = this; //Again more of this bad practice stuff.
 
@@ -76,44 +80,43 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        if (id == R.id.menu_item_add) {
-            //The add button was clicked. Bring up dialogue for adding subject.
-
-            FragmentManager fm = this.getSupportFragmentManager();
-            AddDialog dialog = new AddDialog();
-            dialog.show(fm, "add_subject");
-        }
-
-        if (id == R.id.menu_item_delete) {
-            getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_frag_container, new OrganizationDeleteFragment())
-                .addToBackStack(null)
-                .commit();
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
-    public static void toSectionFragment(Subject subject) {
+    public void toSectionFragment(Subject subject) {
                 currentSub = subject;
 
-                instance.getSupportFragmentManager()
+                getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_frag_container, new SectionFragment(subject))
                 .addToBackStack(null)
                 .commit();
     }
+
+    public void toSectionFragmentNoBack(Subject subject) {
+        currentSub = subject;
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.main_frag_container, new SectionFragment(subject))
+                .commit();
+    }
+
+
+    public void toNoteActivity(Section sec) {
+        Intent i = new Intent(this, NotecardActivity.class);
+        i.putExtra(SUBJECT_POSITION_KEY, subjects.indexOf(currentSub));
+        i.putExtra(SECTION_POSITION_KEY, currentSub.getSections().indexOf(sec));
+        i.putExtra("SubjectArray", subjects);
+        startActivity(i);
+    }
+
+    public void toSubjectFragment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main_frag_container, new SubjectFragment())
+                .commit();
+    }
+
 
 
 }

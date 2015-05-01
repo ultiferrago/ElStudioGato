@@ -1,5 +1,6 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -54,17 +55,13 @@ public class SectionAdapter extends BaseAdapter {
 
         TextView tv = (TextView) rowView.findViewById(R.id.SubjectText);
         tv.setText(sections.get(position).getName());
-
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //A button was clicked launch the section fragment.
-                Log.i("SectionClick", sections.get(position).getName());
-                Intent intent = new Intent(ctx, NotecardActivity.class);
-                intent.putExtra("SubjectPos", subjectPosition);
-                intent.putExtra("SectionPos", position);
-
-                ctx.startActivity(intent);
+                if (ctx instanceof MainActivity) {
+                    ((MainActivity)ctx).toNoteActivity(sections.get(position));
+                }
             }
         });
         return rowView;

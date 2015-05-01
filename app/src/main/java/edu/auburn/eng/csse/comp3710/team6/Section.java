@@ -1,11 +1,15 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by Tyler Hoover on 4/25/15.
  */
-public class Section {
+public class Section implements Parcelable {
 
     private final String sectionName; //Name of this section
     private final ArrayList<Note> notes; //List of the notes attached to this section.
@@ -71,5 +75,31 @@ public class Section {
      */
     public ArrayList<Note> getNoteCards() {
         return (ArrayList<Note>)notes.clone();
+    }
+
+    public static final Parcelable.Creator<Section> CREATOR = new Parcelable.Creator<Section>() {
+        public Section createFromParcel(Parcel in) {
+            return new Section(in);
+        }
+
+        public Section[] newArray(int size) {
+            return new Section[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(sectionName);
+        dest.writeList(notes);
+    }
+
+    private Section(Parcel in) {
+        sectionName = in.readString();
+        notes = in.readArrayList(Note.class.getClassLoader());
     }
 }
