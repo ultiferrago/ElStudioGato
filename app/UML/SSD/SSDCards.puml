@@ -31,7 +31,16 @@ loop Until Done
 User -> System : Want Answer
 System --> User : Show Answer
 User -> System : Select Right or Wrong
-System --> User : Display New Statistics
+System --> User : Update New Statistics
+end
+loop Until Done
+User -> System : Retest Wrong
+System --> System : Get Wrong Cards
+System --> User: Display Wrong Cards
+User -> System : Want Answer
+System --> User : Show Answer
+User -> System : Select Right or Wrong
+System --> User : Update New Statistics
 end
 System -> Server : Request Save
 activate Server

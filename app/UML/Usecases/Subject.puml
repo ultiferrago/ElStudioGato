@@ -1,0 +1,21 @@
+@startsalt
+{
+{T
++ Show Subjects
+++  Goal
++++ Display all the subjects for the user.
+++ Entry conditions
++++ The splash screen has finished.
+++ Scenario
++++ The user has stated the application.
++++ The application pops up with the splash screen.
+++ Exceptions
++++ The user has no subjects created.
+++ Exit conditions
++++ Successful Exit Conditions
+++++ List of Subjects appears.
++++ Failure Exit Conditions
+++++ None
+}
+}
+@endsalt
