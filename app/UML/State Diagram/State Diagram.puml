@@ -1,0 +1,44 @@
+@startuml
+scale 350 width
+
+
+[*] --> SplashView : Open App
+SplashView --> MenuSubjectView : Load from Database and Show
+
+MenuSubjectView --> AddSubjectView : Add Subject Pressed
+
+AddSubjectView : /do: Save to cache
+AddSubjectView --> MenuSubjectView : Done pressed\n
+
+MenuSubjectView --> SectionView : Section pressed
+SectionView --> MenuSubjectView : Back pressed
+
+SectionView --> AddSectionView : Add Section Pressed
+AddSectionView: /do: Save to cache
+AddSectionView --> SectionView : Done pressed\n
+
+SectionView --> FlashcardView : Section Pressed
+FlashcardView --> SectionView : Back Pressed
+
+FlashcardView --> CorrectOverlay : Tap card and show
+CorrectOverlay : /do: mark card green\n/do: add to correct array\n/do: mark card red\n/do: add to missed array
+CorrectOverlay --> FlashcardView : Press Check mark\n
+CorrectOverlay --> FlashcardView : Press X\
+
+FlashcardView : /do: Flip all cards around\n/do: Flip all cards around to show editable questions and answers
+FlashcardView --> EditFlashcardView : Edit pressed
+EditFlashcardView --> FlashcardView : Done pressed\n
+EditFlashcardView --> EditFlashcardView : Edit Text
+EditFlashcardView : /do: Save changes/new to cache
+EditFlashcardView --> EditFlashcardView : Add new card
+
+FlashcardView --> DoneOverlay : Tapped all cards
+DoneOverlay : /do: set all cards to white\n/do: clear missed\n/do: correct array
+DoneOverlay --> FlashcardView : Redo all pressed
+DoneOverlay --> FlashcardView : Redo Only Missed pressed\n
+DoneOverlay --> SectionView : Done pressed
+
+FromAnyPoint :/do: Save cache to Database
+FromAnyPoint --> [*] : Any point in the app you can close\n
+}
+@enduml
