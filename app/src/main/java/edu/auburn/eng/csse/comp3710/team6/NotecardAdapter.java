@@ -1,5 +1,6 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;

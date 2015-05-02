@@ -1,4 +1,4 @@
-package edu.auburn.eng.csse.comp3710.team6.database.realm;
+package edu.auburn.eng.csse.comp3710.team6;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -12,7 +12,7 @@ import io.realm.RealmObject;
 /**
  * Created by Tyler Hoover on 4/25/15.
  */
-public class Subject extends RealmObject implements Parcelable  {
+public class Subject implements Parcelable  {
 
     private String name; //Subject name ie Comp 3710
     private ArrayList<Section> sections; //Stores all sections

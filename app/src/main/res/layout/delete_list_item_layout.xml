@@ -13,17 +13,28 @@
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginBottom="0dp"
-        android:background="@drawable/list_button"
+        android:background="@drawable/delete_list_button"
         android:paddingBottom="6dp"
         android:paddingTop="6dp"
         android:paddingLeft="5dp"
         android:paddingRight="40dp"
         android:weightSum="1">
 
-        <RadioButton
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete Item"
-            android:id="@+id/radioButton" />
+            android:id="@+id/pawIcon"
+            android:background="@drawable/paw_unselected" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:text="Item Name"
+            android:id="@+id/delete_item_name"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textColor="#FFFFFFFF"
+            android:paddingLeft="60dp" />
     </LinearLayout>
 </LinearLayout>
