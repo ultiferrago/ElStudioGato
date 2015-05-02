@@ -1,4 +1,4 @@
-package edu.auburn.eng.csse.comp3710.team6;
+package edu.auburn.eng.csse.comp3710.team6.database.realm;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,13 +7,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
+import io.realm.RealmObject;
+
 /**
  * Created by Tyler Hoover on 4/25/15.
  */
-public class Subject implements Parcelable {
+public class Subject extends RealmObject implements Parcelable  {
 
-    private final String name; //Subject name ie Comp 3710
-    private final ArrayList<Section> sections; //Stores all sections
+    private String name; //Subject name ie Comp 3710
+    private ArrayList<Section> sections; //Stores all sections
 
     /**
      * Creates a new subject object. Typically used for new subjects
@@ -42,6 +44,10 @@ public class Subject implements Parcelable {
         sections.add(section);
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     /**
      * Adds a new section to this object. Used for creating a brand new section.
      * @param sectionName - Name of section to create and add.
@@ -49,6 +55,10 @@ public class Subject implements Parcelable {
     public void addSection(String sectionName) {
 
         sections.add(new Section(sectionName));
+    }
+
+    public void setSections(ArrayList<Section> sections) {
+        this.sections = sections;
     }
 
     /**
@@ -107,4 +117,7 @@ public class Subject implements Parcelable {
         dest.writeString(name);
         dest.writeList(sections);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }

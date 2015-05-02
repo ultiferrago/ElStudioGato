@@ -4,9 +4,8 @@ import android.content.Intent;
 import android.support.v4.app.DialogFragment;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
+
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -30,7 +29,11 @@ public class AddDialog extends DialogFragment implements View.OnClickListener {
 
         private final String state;
 
-        public AddDialog(String state) {
+        private final MainActivity.ElGatoFragment frag;
+
+
+        public AddDialog(String state, MainActivity.ElGatoFragment frag) {
+            this.frag = frag;
             this.state = state;
         }
 
@@ -76,8 +79,8 @@ public class AddDialog extends DialogFragment implements View.OnClickListener {
                         //Now transition into the new frag
                         if (getActivity() instanceof MainActivity) {
                             //Make sure we won't have a cast issue
-
-                            ((MainActivity)getActivity()).toSectionFragment(sub);
+                            Toast.makeText(getActivity(), "Created " + sub.getSubjectName() + " successfully!", Toast.LENGTH_SHORT).show();
+                            frag.redrawList();
                         } else {
                             Toast error = Toast.makeText(getActivity(), "Error! getActivity() didn't work :(", Toast.LENGTH_SHORT);
                             error.show();
