@@ -2,7 +2,6 @@ package edu.auburn.eng.csse.comp3710.team6;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Collection;
 
 /**
  * Created by Tyler Hoover on 4/27/15.
@@ -23,12 +21,8 @@ public class SectionAdapter extends BaseAdapter {
     private static LayoutInflater layoutInflater;
     private int subjectPosition;
 
-    public SectionAdapter(Context ctx, Subject sub, int subjectPosition) {
-        sections = new ArrayList();
-        this.subjectPosition = subjectPosition;
-        for (Section sec : sub.getSections()) {
-            sections.add(sec);
-        }
+    public SectionAdapter(Context ctx, ArrayList<Section> sections) {
+        this.sections = sections;
         this.ctx = ctx;
         layoutInflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -63,6 +57,7 @@ public class SectionAdapter extends BaseAdapter {
                 Intent intent = new Intent(ctx, NotecardActivity.class);
                 intent.putExtra("SubjectPos", subjectPosition);
                 intent.putExtra("SectionPos", position);
+                intent.putExtra("sectionName", sections.get(position).getName());
 
                 ctx.startActivity(intent);
             }
