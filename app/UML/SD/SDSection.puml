@@ -1,0 +1,43 @@
+@startuml
+User -> System : Subject Selected
+activate User
+activate System
+group Has Section Scenario
+System -> Database : Request Information
+activate Database
+Database --> System : Return Information
+deactivate Database
+System --> User : Display Section
+opt
+User -> System : Select Section
+end
+opt
+loop Until Done
+User -> System : Add Section
+System -> Database : Request Save
+activate Database
+Database --> System: Save Information
+end
+end
+end
+
+Group No Sections Scenario
+System -> Database : Request Information
+activate Database
+Database --> System : Return No Information
+deactivate Database
+System --> User : Display Add Section
+loop Until Done
+User -> System : Add Section
+System -> Database : Request Save
+activate Database
+Database --> System: Save Information
+System --> User : Display Sections
+end
+opt
+ User -> System : Select Section
+end
+deactivate Database
+end
+
+@enduml

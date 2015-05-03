@@ -36,22 +36,16 @@ deactivate Storage
 end
 
 group take test
-loop
+
 loop
 System --> Student : display question
 Student -> System : want answer
 System --> Student : display answer
 Student -> System : correct/incorrect
 
-activate Storage
-System -> Storage : save correct/incorrect
-deactivate Storage
 end
-Student -> System : retake
-opt
-System --> Student : display only wrong answers
-end
-end
+
+
 end
 
 @enduml

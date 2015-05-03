@@ -58,25 +58,6 @@
 +++ Failure Exit Conditions
 ++++None
 }
----
-{T
-+ Test
-++  Goal
-+++ To test multiple sections of flashcards at once.
-++ Entry conditions
-+++ The user has selected a subject.
-++ Scenario
-+++ The user will enter a subject.
-+++ The user will click the test button.
-+++ The user will select what sections they want to test on.
-+++ The user will confirm the sections.
-++ Exceptions
-+++ The user selects a section with no flashcards.
-++ Exit conditions
-+++ Successful Exit Conditions
-++++ Questions will appear on the flashcards.
-+++ Failure Exit Conditions
-++++ A warning will be displayed.
-}
+
 }
 @endsalt

@@ -2,22 +2,40 @@
 User -> System : Start Application
 activate User
 activate System
-group Has Subjects
+group Has Subjects Scenario
 System -> Database : Request Information
 activate Database
 Database --> System : Return Information
 deactivate Database
 System --> User : Display Subjects
+opt
 User -> System : Select Subject
 end
+opt
+loop Until Done
+User -> System : Add Subject
+System -> Database : Request Save
+activate Database
+Database --> System: Save Information
+end
+end
+end
 
-group Has No Subjects
+Group No Subjects Scenario
+System -> Database : Request Information
+activate Database
+Database --> System : Return No Information
+deactivate Database
 System --> User : Display Add Subject
 loop Until Done
 User -> System : Add Subject
 System -> Database : Request Save
 activate Database
 Database --> System: Save Information
+System --> User : Display Subject
+end
+opt
+ User -> System : Select Subject
 end
 deactivate Database
 end

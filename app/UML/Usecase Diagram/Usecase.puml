@@ -4,17 +4,15 @@ Actor user
 Actor storage
 rectangle System {
 (load splash) ..> (show subject) : <<includes>>
-(show subject) ..> (add) : <<includes>>
-(show subject) ..> (delete) :  <<includes>>
+(show subject) ...> (add) : <<includes>>
+(show subject) ...> (delete) :  <<includes>>
 (show subject) -- storage
-(show subject) ..> (edit) : <<includes>>
+(show subject) ...> (edit) : <<includes>>
 
 (show section) -- storage
 (show section) -- user
 (show section) ..> (edit) : <<includes>>
 
-(show section) ..> (test) : <<includes>>
-(test) ..> (show question) : <<includes>>
 (show flashcards) ..> (show question) : <<includes>>
 (show section) ..> (add) : <<includes>>
 (show section) ..> (delete) : <<includes>>
@@ -32,8 +30,6 @@ rectangle System {
 (mark wrong) ..> (show statics) : <<includes>>
 (mark right) ..> (show statics) : <<includes>>
 
-(show answer) ..> (retest all) : <<includes>>
-(show answer) ..> (retest wrong) : <<includes>>
 }
 
 

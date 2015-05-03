@@ -1,0 +1,77 @@
+@startuml
+User -> System : Selected Section
+activate User
+activate System
+group Has Cards
+System -> Database : Request Information
+activate Database
+Database --> System : Return Information
+deactivate Database
+
+System --> User : Display Cards If Have
+
+group Has No Cards Scenario
+loop until done
+User -> System : Select Add Cards
+System --> User : Display Add Information
+User -> System : Fill Out Information
+User -> System : Select Save
+System -> Database : Request Save
+activate Database
+Database --> System: Save Information
+deactivate Database
+end
+System --> User : Display Cards
+end
+
+group Add Card Scenario
+loop until done
+User -> System : Select Add Cards
+System --> User : Display Add Information
+User -> System : Fill Out Information
+User -> System : Select Save
+System -> Database : Request Save
+activate Database
+Database --> System: Save Information
+deactivate Database
+end
+System --> User : Display New Cards List
+end
+
+
+group Delete Cards Scenario
+User -> System : Select Delete Cards
+System --> User : Display Cards List
+User -> System : Select Cards for remove
+System --> User : Remove Card
+System -> Database: Request Save
+activate Database
+Database --> System: Save Information
+deactivate Database
+System --> User : Show New Card List
+end
+
+group Edit Cards scenario
+User -> System : Select Edit Card
+System --> User : Display All Cards
+User -> System : Edit Cards
+User -> System : Save Changes
+System -> Database: Request Save
+activate Database
+Database --> System: Save Information
+deactivate Database
+System --> User : Show New Card List
+end
+
+group Go Through Test Scenario
+loop Until Done
+User -> System : Want Answer
+System --> User : Show Answer
+User -> System : Select Right or Wrong
+System --> User : Update New Statistics
+end
+
+
+end
+
+@enduml
