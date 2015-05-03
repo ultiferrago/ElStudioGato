@@ -19,29 +19,24 @@ import java.util.Collection;
  */
 public class SectionAdapter extends BaseAdapter {
 
-    private ArrayList<Section> sections;
+    Subject sub;
     private Context ctx;
     private static LayoutInflater layoutInflater;
-    private int subjectPosition;
 
-    public SectionAdapter(Context ctx, Subject sub, int subjectPosition) {
-        sections = new ArrayList();
-        this.subjectPosition = subjectPosition;
-        for (Section sec : sub.getSections()) {
-            sections.add(sec);
-        }
+    public SectionAdapter(Context ctx, Subject sub) {
+        this.sub = sub;
         this.ctx = ctx;
-        layoutInflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return sections.size();
+        return sub.getSections().size();
     }
 
     @Override
     public Object getItem(int position) {
-        return sections.get(position);
+        return sub.getSections().get(position);
     }
 
     @Override
@@ -54,13 +49,13 @@ public class SectionAdapter extends BaseAdapter {
         View rowView = layoutInflater.inflate(R.layout.adapter_layout, null);
 
         TextView tv = (TextView) rowView.findViewById(R.id.SubjectText);
-        tv.setText(sections.get(position).getName());
+        tv.setText(sub.getSections().get(position).getName());
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //A button was clicked launch the section fragment.
                 if (ctx instanceof MainActivity) {
-                    ((MainActivity)ctx).toNoteActivity(sections.get(position));
+                    ((MainActivity) ctx).toNoteActivity(sub, sub.getSections().get(position));
                 }
             }
         });

@@ -35,6 +35,7 @@
             android:layout_gravity="center"
             android:textAlignment="center"
             android:textColor="#FFFFFFFF"
-            android:paddingLeft="60dp" />
+            android:paddingLeft="60dp"
+            android:ellipsize="end"/>
     </LinearLayout>
 </LinearLayout>

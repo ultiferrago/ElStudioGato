@@ -1,10 +1,8 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v4.app.DialogFragment;
-import android.app.AlertDialog;
 import android.app.Dialog;
 
 import android.os.Bundle;
@@ -44,6 +42,7 @@ public class AddSubjectDialog extends DialogFragment implements View.OnClickList
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         dialog = new Dialog(getActivity());
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         dialog.setCanceledOnTouchOutside(false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.custom_dialog_add);
@@ -72,17 +71,9 @@ public class AddSubjectDialog extends DialogFragment implements View.OnClickList
             }
             Subject sub = new Subject(mDialogEditText.getText().toString());
             MainActivity.subjects.add(sub);
-            //Now transition into the new frag
-            if (getActivity() instanceof MainActivity) {
-                //Make sure we won't have a cast issue
-                Toast.makeText(getActivity(), "Created " + sub.getSubjectName() + " successfully!", Toast.LENGTH_SHORT).show();
-                findFrag();
-                if (frag != null) {
-                    frag.redrawList();
-                }
-            } else {
-                Toast error = Toast.makeText(getActivity(), "Error! getActivity() didn't work :(", Toast.LENGTH_SHORT);
-                error.show();
+            findFrag();
+            if (frag != null) {
+                frag.redrawList();
             }
         }
     }
@@ -91,9 +82,9 @@ public class AddSubjectDialog extends DialogFragment implements View.OnClickList
         if (frag != null) {
             return;
         } else {
-            for (Fragment frag : getActivity().getSupportFragmentManager().getFragments())  {
+            for (Fragment frag : getActivity().getSupportFragmentManager().getFragments()) {
                 if (frag instanceof SubjectFragment) {
-                    this.frag = (SubjectFragment)frag;
+                    this.frag = (SubjectFragment) frag;
                     return;
                 }
             }

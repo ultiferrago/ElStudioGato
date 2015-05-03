@@ -12,13 +12,14 @@ import io.realm.RealmObject;
 /**
  * Created by Tyler Hoover on 4/25/15.
  */
-public class Subject implements Parcelable  {
+public class Subject implements Parcelable {
 
     private String name; //Subject name ie Comp 3710
     private ArrayList<Section> sections; //Stores all sections
 
     /**
      * Creates a new subject object. Typically used for new subjects
+     *
      * @param name - Name of this subject.
      */
     public Subject(String name) {
@@ -28,7 +29,8 @@ public class Subject implements Parcelable  {
 
     /**
      * Creates a subject object. Typically used for loading subjects.
-     * @param name - Name of subject.
+     *
+     * @param name     - Name of subject.
      * @param sections - Sections stored under this subject.
      */
     public Subject(String name, ArrayList<Section> sections) {
@@ -38,6 +40,7 @@ public class Subject implements Parcelable  {
 
     /**
      * Adds a new section to this object. Used when section has already been created.
+     *
      * @param section - Section to add to this subject.
      */
     public void addSection(Section section) {
@@ -50,6 +53,7 @@ public class Subject implements Parcelable  {
 
     /**
      * Adds a new section to this object. Used for creating a brand new section.
+     *
      * @param sectionName - Name of section to create and add.
      */
     public void addSection(String sectionName) {
@@ -63,6 +67,7 @@ public class Subject implements Parcelable  {
 
     /**
      * Returns name of this subject.
+     *
      * @return - Subject name.
      */
     public String getSubjectName() {
@@ -71,6 +76,7 @@ public class Subject implements Parcelable  {
 
     /**
      * Returns list of sections for this subject.
+     *
      * @return - List of sections.
      */
     public ArrayList<Section> getSections() {
@@ -78,16 +84,16 @@ public class Subject implements Parcelable  {
     }
 
     public Section getSection(String name) {
-       Section sec = null;
-       for (Section temp : sections) {
-           if (temp.getName().equals(name)) {
-               sec = temp;
-           }
-       }
-       if (sec == null) {
-        sec = new Section(name);
-        sections.add(sec);
-       }
+        Section sec = null;
+        for (Section temp : sections) {
+            if (temp.getName().equals(name)) {
+                sec = temp;
+            }
+        }
+        if (sec == null) {
+            sec = new Section(name);
+            sections.add(sec);
+        }
         return sec;
     }
 

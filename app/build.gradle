@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "edu.auburn.eng.csse.comp3710.team6"
         minSdkVersion 14
-        targetSdkVersion 21
+        targetSdkVersion 18
         versionCode 1
         versionName "1.0"
     }

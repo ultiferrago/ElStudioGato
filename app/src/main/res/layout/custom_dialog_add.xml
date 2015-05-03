@@ -3,8 +3,8 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFF6D4">
-
+    android:background="@android:color/transparent"
+    >
 
     <ImageView
         android:layout_width="fill_parent"
@@ -20,33 +20,49 @@
         android:textAlignment="center"
         android:textStyle="bold"
         android:gravity="center"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:textColor="#ff000000"
+        android:background="#FFF6D4"
+        />
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
         android:ems="10"
         android:id="@+id/custom_dialog_edit_text"
         android:hint="Replace me"
-        android:inputType="text" />
+        android:inputType="text"
+        android:background="@drawable/background_baige"
+        android:textSize="20sp"
+        android:paddingLeft="6dp" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"
             android:id="@+id/custom_dialog_cancel_button"
-            android:layout_weight="1" />
+            android:background="@drawable/list_button"
+            android:layout_weight="1"
+            android:textColor="#ffffffff"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="2dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create"
+            android:background="@drawable/list_button"
             android:id="@+id/custom_dialog_create_button"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:textColor="#ffffffff"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="2dp" />
     </LinearLayout>
+
 </LinearLayout>

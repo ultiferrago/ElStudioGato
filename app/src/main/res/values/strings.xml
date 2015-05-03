@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Team 6</string>
+    <string name="app_name">El Studio Gato</string>
 
     <string name="dialog_add_subject_hint">Enter subject name</string>
     <string name="dialog_add_subject_title">Create Subject</string>

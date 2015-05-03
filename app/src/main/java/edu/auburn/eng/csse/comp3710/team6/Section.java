@@ -16,6 +16,7 @@ public class Section implements Parcelable {
 
     /**
      * Creates a new section object with the given name.
+     *
      * @param sectionName - Name of this section.
      */
     public Section(String sectionName) {
@@ -25,8 +26,9 @@ public class Section implements Parcelable {
 
     /**
      * Creates a new Section with a given name and list of note cards.
+     *
      * @param sectionName - Name of section.
-     * @param notes - Notes attached to this section.
+     * @param notes       - Notes attached to this section.
      */
     public Section(String sectionName, ArrayList<Note> notes) {
         this.sectionName = sectionName;
@@ -35,6 +37,7 @@ public class Section implements Parcelable {
 
     /**
      * Adds multiple note cards to this section.
+     *
      * @param notes - List of note cards to add.
      */
     public void addNotes(ArrayList<Note> notes) {
@@ -45,6 +48,7 @@ public class Section implements Parcelable {
 
     /**
      * Adds multiple note cards to this section.
+     *
      * @param notes - List of note cards to add.
      */
     public void addNotes(Note... notes) {
@@ -55,6 +59,7 @@ public class Section implements Parcelable {
 
     /**
      * Adds a single note card to this section.
+     *
      * @param note - Note to add.
      */
     public void addNote(Note note) {
@@ -63,6 +68,7 @@ public class Section implements Parcelable {
 
     /**
      * Gets the name of this section.
+     *
      * @return - name of section.
      */
     public String getName() {
@@ -71,10 +77,11 @@ public class Section implements Parcelable {
 
     /**
      * Get the list of note cards attached to this section.
+     *
      * @return - list of note cards.
      */
     public ArrayList<Note> getNoteCards() {
-        return (ArrayList<Note>)notes.clone();
+        return (ArrayList<Note>) notes.clone();
     }
 
     public static final Parcelable.Creator<Section> CREATOR = new Parcelable.Creator<Section>() {

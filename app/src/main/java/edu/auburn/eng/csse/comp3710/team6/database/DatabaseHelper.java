@@ -48,6 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Singleton method.
+     *
      * @param context - Context to create this object with (if needed)
      * @return - instance of this class.
      */
@@ -61,6 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Creates a DatabaseHelper object
+     *
      * @param context
      */
     private DatabaseHelper(Context context) {
@@ -73,6 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     /**
      * Called when database is first created. Since the only table we know 100% should be around
      * this is where we should create our subjects table.
+     *
      * @param db
      */
     @Override
@@ -109,6 +112,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     /**
      * Counts the number of subjects already in the table
+     *
      * @return - Number of subjects  already created.
      */
     public int getTableCount(String tableName) {
@@ -128,7 +132,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * Writes the current cached information into the database.
      */
     public void saveDatabase(ArrayList<Subject> subjects) {
-        if (System.currentTimeMillis() - lastUpdateTime < 15000) {
+        if (System.currentTimeMillis() - lastUpdateTime < 1000) {
             //If the last save time was less than 60 seconds ago.
             return;
         }
@@ -136,9 +140,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase(); //Database
 
         //We want to make sure the database matches perfectly so lets just delete everything in the table and rewrite it.
-        db.execSQL("delete from "+ TABLE_SUBJECTS);
-        db.execSQL("delete from "+ TABLE_SECTIONS);
-        db.execSQL("delete from "+ TABLE_NOTES);
+        db.execSQL("delete from " + TABLE_SUBJECTS);
+        db.execSQL("delete from " + TABLE_SECTIONS);
+        db.execSQL("delete from " + TABLE_NOTES);
         //Go through every subject
         for (Subject sub : subjects) {
 
@@ -281,7 +285,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return values;
     }
-
 
 
 }

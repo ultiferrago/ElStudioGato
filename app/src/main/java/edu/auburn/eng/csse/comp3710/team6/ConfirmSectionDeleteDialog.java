@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by Ferrago on 5/2/15.
  */
-public class ConfirmSubjectDeleteDialog extends DialogFragment implements View.OnClickListener {
+public class ConfirmSectionDeleteDialog extends DialogFragment implements View.OnClickListener {
     Dialog dialog;
 
     Button cancel;
@@ -23,7 +23,7 @@ public class ConfirmSubjectDeleteDialog extends DialogFragment implements View.O
 
     ArrayList<Integer> selected = new ArrayList();
 
-    public ConfirmSubjectDeleteDialog() {
+    public ConfirmSectionDeleteDialog() {
 
     }
 
@@ -71,17 +71,17 @@ public class ConfirmSubjectDeleteDialog extends DialogFragment implements View.O
     }
 
     public void confirmDelete() {
-        ArrayList<Subject> deleteMe = new ArrayList<>();
+        ArrayList<Section> deleteMe = new ArrayList<>();
         for (int i : selected) {
-            deleteMe.add(MainActivity.subjects.get(i));
+            deleteMe.add(MainActivity.currentSub.getSections().get(i));
         }
 
-        for (Subject sub : deleteMe) {
-            MainActivity.subjects.remove(sub);
+        for (Section sec : deleteMe) {
+            MainActivity.currentSub.getSections().remove(sec);
         }
         for (Fragment frag : getActivity().getSupportFragmentManager().getFragments()) {
-            if (frag instanceof SubjectFragment) {
-                ((SubjectFragment) frag).redrawList();
+            if (frag instanceof SectionFragment) {
+                ((SectionFragment) frag).redrawList();
                 return;
             }
         }

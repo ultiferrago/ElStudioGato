@@ -1,7 +1,6 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,28 +13,28 @@ import java.util.ArrayList;
 /**
  * Created by Tyler Hoover on 4/27/15.
  */
-public class SubjectDeleteAdapter extends BaseAdapter {
+public class SectionDeleteAdapter extends BaseAdapter {
 
-    private ArrayList<Subject> subjects;
+    private ArrayList<Section> sections;
     private Context ctx;
     private static LayoutInflater layoutInflater;
 
     private ArrayList<Integer> selected = new ArrayList<>();
 
-    public SubjectDeleteAdapter(Context ctx, ArrayList<Subject> subjects) {
-        this.subjects = subjects;
+    public SectionDeleteAdapter(Context ctx, ArrayList<Section> sections) {
+        this.sections = sections;
         this.ctx = ctx;
         layoutInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return subjects.size();
+        return sections.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return subjects.get(position);
+        return sections.get(position);
     }
 
     @Override
@@ -53,7 +52,7 @@ public class SubjectDeleteAdapter extends BaseAdapter {
         }
 
         TextView tv = (TextView) rowView.findViewById(R.id.delete_item_name);
-        tv.setText(subjects.get(position).getSubjectName());
+        tv.setText(sections.get(position).getName());
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override

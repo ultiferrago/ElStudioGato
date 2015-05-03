@@ -1,18 +1,14 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import edu.auburn.eng.csse.comp3710.team6.database.DatabaseHelper;
-import edu.auburn.eng.csse.comp3710.team6.database.DummyDatabase;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -21,10 +17,9 @@ public class MainActivity extends ActionBarActivity {
         public void redrawList();
     }
 
-    public static final String CURRENT_SUBJECT_KEY = "CURRENT_SUBJECT";
-    public static final String CURRENT_SECTION_KEY = "CURRENT_SUBJECT";
     public static final String SUBJECS_KEY = "SUBJECTS";
-
+    public static final String SECTION_POSITION_KEY = "SectionPos";
+    public static final String SUBJECT_POSITION_KEY = "SubjectPos";
 
     public static Subject currentSub = null;
 
@@ -55,8 +50,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -70,9 +63,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void toSectionFragment(Subject subject) {
-                currentSub = subject;
+        currentSub = subject;
 
-                getSupportFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_frag_container, new SectionFragment())
                 .addToBackStack(null)
@@ -80,12 +73,11 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-
-    public void toNoteActivity(Section sec) {
+    public void toNoteActivity(Subject sub, Section sec) {
         Intent i = new Intent(this, NotecardActivity.class);
-        i.putExtra(CURRENT_SUBJECT_KEY, currentSub);
-        i.putExtra(CURRENT_SECTION_KEY, sec);
-        i.putExtra("SubjectArray", subjects);
+        i.putExtra(MainActivity.SECTION_POSITION_KEY, sub.getSections().indexOf(sec));
+        i.putExtra(MainActivity.SUBJECT_POSITION_KEY, subjects.indexOf(sub));
+        i.putExtra(MainActivity.SUBJECS_KEY, subjects);
         startActivity(i);
     }
 
@@ -95,6 +87,9 @@ public class MainActivity extends ActionBarActivity {
                 .commit();
     }
 
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
 
 
 }

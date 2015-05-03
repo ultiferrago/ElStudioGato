@@ -4,7 +4,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/icon"
+        android:icon="@mipmap/ic_launcher"
         android:label=""
         android:theme="@style/ActionBarStyle" >
         <activity
@@ -22,17 +22,11 @@
         <activity
             android:name=".MainActivity"
             android:label=""
-            android:icon="@drawable/icon"
             />
 
         <activity
             android:name=".NotecardActivity"
-            android:icon="@drawable/icon"
          />
-        <activity
-            android:name=".NotecardEditActivity"
-            android:icon="@drawable/icon"
-        />
     </application>
 
 </manifest>
