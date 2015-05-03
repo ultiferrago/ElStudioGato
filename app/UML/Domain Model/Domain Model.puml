@@ -1,35 +1,19 @@
 @startuml
 
-Class User
+Class Student
 package ElStudioGato <<React>> {
-Class Splash
-Class Subjects
-Class Section
 Class FlashCards
+Class Questions
+Class Answers
+Class Edit
 
-Class AddToView
-Class EditView
-Class DeleteView
-}
-package Database <<React>> {
-Class Storage
-}
-
-Subjects"1" --> "1"Storage : Saves To database on app close
-Storage"1" <-- "1"Splash : Loads database on app open
-
-User"1" -- "1"Splash : Open Up 
-
-Splash"1" *-- "1"Subjects : Load
-Subjects"1" -- "1"AddToView : contains
-
-Subjects"1" -- "*"Section : Displays
-Section"1" -- "1"AddToView : contains
-
-Section"1" -- "*"FlashCards : Displays
-FlashCards"1" -- "1"AddToView : contains
-FlashCards"1" -- "1"EditView : contains
-FlashCards"1" -- "1"DeleteView : contains
+Student"1" -- "1"Edit : Can
+Student"1" o-- "+"FlashCards : Interacts with
+FlashCards"1" o-- "1"Questions : has
+FlashCards"1" o-- "1"Answers : has
+Answers"1" *-- "1"Wrong : has
+Answers"1" *-- "1"Right : has
+Edit"1" -- "+"FlashCards : Changes
 
 
 @enduml
