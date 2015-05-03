@@ -9,12 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 /**
  * A placehold fragment containing a simple list view.
  */
-public class SectionFragment extends Fragment implements MainActivity.ElGatoFragment{
+public class SectionFragment extends Fragment implements MainActivity.ElGatoFragment {
     Subject subject; //What subject are we inside of.
     private int position; //What position was this subject in the arraylist when clicked.
     SectionAdapter adapter;
@@ -34,12 +35,7 @@ public class SectionFragment extends Fragment implements MainActivity.ElGatoFrag
     @Override
     public void onResume() {
         super.onResume();
-        if (lv != null) {
-            adapter = new SectionAdapter(getActivity(), subject, position);
-            lv.setAdapter(adapter);
-            lv.invalidate();
-        }
-
+        redrawList();
     }
 
     @Override
@@ -56,10 +52,17 @@ public class SectionFragment extends Fragment implements MainActivity.ElGatoFrag
         int id = item.getItemId();
 
         if (id == R.id.menu_section_item_add) {
-            AddSubjectDialog dialog = new AddSubjectDialog();
+            AddSectionDialog dialog = new AddSectionDialog();
+            dialog.setFrag(this);
             dialog.show(getFragmentManager(), "Apples");
         } else if (id == R.id.menu_section_item_delete) {
-
+            if (MainActivity.currentSub.getSections().isEmpty()) {
+                Toast.makeText(this.getActivity(), "There are no sections. Why not try creating one first!", Toast.LENGTH_SHORT).show();
+            } else {
+                DeleteSectionDialog dialog = new DeleteSectionDialog();
+                dialog.setFrag(this);
+                dialog.show(getFragmentManager(), "pie");
+            }
         }
 
 
@@ -71,15 +74,22 @@ public class SectionFragment extends Fragment implements MainActivity.ElGatoFrag
         View rootView = inflater.inflate(R.layout.main_fragment, container, false);
 
         //Grab list view, create adapter, set it.
-        lv = (ListView)rootView.findViewById(R.id.subjectView);
-        adapter = new SectionAdapter(getActivity(), subject, position);
+        lv = (ListView) rootView.findViewById(R.id.subjectView);
+        adapter = new SectionAdapter(getActivity(), subject);
         lv.setAdapter(adapter);
+        if (getActivity() != null) {
+            ((MainActivity) getActivity()).setActionBarTitle(MainActivity.currentSub.getSubjectName());
+        }
 
         return rootView;
     }
 
     @Override
     public void redrawList() {
-
+        if (lv != null) {
+            adapter = new SectionAdapter(getActivity(), subject);
+            lv.setAdapter(adapter);
+            lv.invalidate();
+        }
     }
 }

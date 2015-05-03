@@ -1,20 +1,25 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import org.json.JSONException;
-
-import java.io.IOException;
 import java.util.ArrayList;
+
+import edu.auburn.eng.csse.comp3710.team6.database.DatabaseHelper;
 
 /**
  * Created by kennystreit on 4/26/15.
@@ -25,13 +30,36 @@ public class NotecardEditFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    ArrayList<Note> notecardList = new ArrayList<>();
 
-    public NotecardEditFragment(ArrayList<Note> notes) {
-        this.notecardList = notes;
+    public NotecardEditFragment() {
+
     }
 
-    public NotecardEditFragment() {}
+    @Override
+    public void onCreate(Bundle resume) {
+        super.onCreate(resume);
+
+        if (resume != null) {
+            mAdapter = new NotecardEditAdapter(resume.<Note>getParcelableArrayList("notecards"));
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle save) {
+        super.onSaveInstanceState(save);
+        int notecardListIndex = 0;
+        ArrayList<Note> notes = new ArrayList();
+        for (int i = 0; i < mRecyclerView.getAdapter().getItemCount() * 2; i += 2) {
+            EditText question = (EditText) mRecyclerView.findViewById(i);
+            String questString = question.getText().toString();
+            EditText answer = (EditText) mRecyclerView.findViewById(i + 1);
+            String ansString = answer.getText().toString();
+
+            notes.add(new Note(questString, ansString));
+            notecardListIndex++;
+        }
+        save.putParcelableArrayList("notecards", notes);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,18 +67,10 @@ public class NotecardEditFragment extends Fragment {
         super.onCreate(savedInstanceState);
         final View rootView = inflater.inflate(R.layout.notecard_fragment, container, false);
 
-        /*JsonStorage jsonStorage = new JsonStorage(getActivity());
-        try {
-            String notecardJSON = jsonStorage.readNotecardsAsset();
-            Log.d("KENNY", "Drink JSON: " + notecardJSON);
-            notecardList = jsonStorage.createNotecardItem(notecardJSON);
-            Log.d("KENNY", "Success!");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException ej) {
-            Log.d("KENNY", "JSON Failed: " + ej);
-            ej.printStackTrace();
-        }*/
+        rootView.findViewById(R.id.floating_action_button).setVisibility(View.GONE);
+
+
+
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.my_recycler_view);
 
@@ -63,21 +83,51 @@ public class NotecardEditFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-        mAdapter = new NotecardEditAdapter(notecardList);
+        if (mAdapter == null) {
+            mAdapter = new NotecardEditAdapter(NotecardActivity.subjects.get(NotecardActivity.subjectPos).getSections().get(NotecardActivity.sectionPos).getNoteCards());
+        }
         mRecyclerView.setAdapter(mAdapter);
 
-        Log.d("KENNY", "Fragment created...");
+        setHasOptionsMenu(true);
 
         return rootView;
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-    {
-        super.onCreateOptionsMenu(menu, inflater);
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         menu.clear();
 
-        inflater.inflate(R.menu.notecard_menu, menu);
-        Log.d("KENNY", "Options Menu Changed...");
+        inflater.inflate(R.menu.menu_notecard_edit, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.save:
+
+                int notecardListIndex = 0;
+                for (int i = 0; i < mRecyclerView.getAdapter().getItemCount() * 2; i += 2) {
+                    EditText question = (EditText) mRecyclerView.findViewById(i);
+                    String questString = question.getText().toString();
+                    EditText answer = (EditText) mRecyclerView.findViewById(i + 1);
+                    String ansString = answer.getText().toString();
+
+                    NotecardActivity.subjects.get(NotecardActivity.subjectPos).getSections().get(NotecardActivity.sectionPos).getNoteCards().get(notecardListIndex).setFront(questString);
+                    NotecardActivity.subjects.get(NotecardActivity.subjectPos).getSections().get(NotecardActivity.sectionPos).getNoteCards().get(notecardListIndex).setBack(ansString);
+                    MainActivity.subjects.get(NotecardActivity.subjectPos).getSections().get(NotecardActivity.sectionPos).getNoteCards().get(notecardListIndex).setFront(questString);
+                    MainActivity.subjects.get(NotecardActivity.subjectPos).getSections().get(NotecardActivity.sectionPos).getNoteCards().get(notecardListIndex).setBack(ansString);
+                    notecardListIndex++;
+                }
+
+                getActivity().getSupportFragmentManager().popBackStack();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+
 }

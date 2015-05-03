@@ -22,7 +22,7 @@ public class SubjectAdapter extends BaseAdapter {
     public SubjectAdapter(Context ctx, ArrayList<Subject> subjects) {
         this.subjects = subjects;
         this.ctx = ctx;
-        layoutInflater = (LayoutInflater)ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        layoutInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class SubjectAdapter extends BaseAdapter {
                 //A button was clicked launch the section fragment.
                 Log.i("SubjectClick", subjects.get(position).getSubjectName());
                 if (ctx instanceof MainActivity) {
-                    ((MainActivity)ctx).toSectionFragment(subjects.get(position));
+                    ((MainActivity) ctx).toSectionFragment(subjects.get(position));
                 }
             }
         });

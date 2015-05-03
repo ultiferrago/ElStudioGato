@@ -18,11 +18,15 @@ import io.realm.RealmResults;
  */
 public class SplashActivity extends Activity {
 
-    /** Duration of wait **/
+    /**
+     * Duration of wait *
+     */
     private final int SPLASH_DISPLAY_LENGTH = 2000; //Increased time.
     private final boolean fakeData = false;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -41,7 +45,7 @@ public class SplashActivity extends Activity {
 
         /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
-        new Handler().postDelayed(new Runnable(){
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */

@@ -3,7 +3,7 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFF6D4">
+    android:background="@android:color/transparent">
 
 
     <ImageView
@@ -21,7 +21,8 @@
         android:textStyle="bold"
         android:gravity="center"
         android:textSize="30sp"
-        android:textColor="#ff000001" />
+        android:textColor="#ff000001"
+        android:background="#FFF6D4"/>
 
     <TextView
         android:layout_width="fill_parent"
@@ -33,12 +34,14 @@
         android:gravity="center"
         android:textSize="15sp"
         android:textColor="#ffc40005"
+        android:background="@drawable/background_baige"
         android:textIsSelectable="false" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp">
 
         <Button
             android:layout_width="wrap_content"
@@ -46,15 +49,19 @@
             android:text="Cancel"
             android:id="@+id/delete_confirm_cancel"
             android:layout_weight="1"
-            android:elegantTextHeight="false"
-             />
+            android:background="@drawable/list_button"
+            android:textColor="#ffffffff"
+            android:layout_marginRight="1dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delete"
             android:id="@+id/delete_confirm_confirm"
-            android:layout_weight="1" />
+            android:background="@drawable/list_button"
+            android:layout_weight="1"
+            android:textColor="#ffffffff"
+            android:layout_marginLeft="1dp" />
     </LinearLayout>
 
 </LinearLayout>

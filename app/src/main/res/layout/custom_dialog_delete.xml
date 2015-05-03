@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="fill_parent"
-    android:layout_height="wrap_content">
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="250dp">
 
     <ListView
         android:layout_width="fill_parent"
-        android:layout_height="200dp"
+        android:layout_height="wrap_content"
         android:id="@+id/custom_delete_dialog_listview"
+        android:layout_marginBottom="@dimen/spacing_small"
         android:fadeScrollbars="false"
+        android:minHeight="66dp"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:footerDividersEnabled="false" />
+        android:footerDividersEnabled="false"
+        android:layout_weight="15"/>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <Button
             android:layout_width="wrap_content"

@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -16,13 +15,15 @@ import java.util.ArrayList;
 public class NotecardEditAdapter extends RecyclerView.Adapter<NotecardEditAdapter.ViewHolder> {
     private ArrayList<Note> notecardList;
 
+    int i = 0;
+
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // each data item is just a string in this case
-        public TextView mQuestion;
-        public TextView mAnswer;
+        public EditText mQuestion;
+        public EditText mAnswer;
         public ViewHolder(View v) {
             super(v);
             mQuestion = (EditText) v.findViewById(R.id.question);
@@ -53,9 +54,12 @@ public class NotecardEditAdapter extends RecyclerView.Adapter<NotecardEditAdapte
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 
+        holder.mQuestion.setId(i); i++;
+        holder.mAnswer.setId(i); i++;
+
+
         holder.mQuestion.setText(notecardList.get(position).getFront());
         holder.mAnswer.setText(notecardList.get(position).getBack());
-        Log.d("KENNY", "Question: " + notecardList.get(position).getFront());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

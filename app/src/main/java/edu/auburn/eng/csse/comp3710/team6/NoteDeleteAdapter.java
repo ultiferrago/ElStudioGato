@@ -14,28 +14,28 @@ import java.util.ArrayList;
 /**
  * Created by Tyler Hoover on 4/27/15.
  */
-public class SubjectDeleteAdapter extends BaseAdapter {
+public class NoteDeleteAdapter extends BaseAdapter {
 
-    private ArrayList<Subject> subjects;
+    private ArrayList<Note> notes;
     private Context ctx;
     private static LayoutInflater layoutInflater;
 
     private ArrayList<Integer> selected = new ArrayList<>();
 
-    public SubjectDeleteAdapter(Context ctx, ArrayList<Subject> subjects) {
-        this.subjects = subjects;
+    public NoteDeleteAdapter(Context ctx, ArrayList<Note> notes) {
+        this.notes = notes;
         this.ctx = ctx;
         layoutInflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return subjects.size();
+        return notes.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return subjects.get(position);
+        return notes.get(position);
     }
 
     @Override
@@ -53,7 +53,7 @@ public class SubjectDeleteAdapter extends BaseAdapter {
         }
 
         TextView tv = (TextView) rowView.findViewById(R.id.delete_item_name);
-        tv.setText(subjects.get(position).getSubjectName());
+        tv.setText(notes.get(position).getFront());
 
         rowView.setOnClickListener(new View.OnClickListener() {
             @Override

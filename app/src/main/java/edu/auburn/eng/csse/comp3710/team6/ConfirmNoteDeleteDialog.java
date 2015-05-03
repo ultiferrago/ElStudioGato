@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /**
  * Created by Ferrago on 5/2/15.
  */
-public class ConfirmSubjectDeleteDialog extends DialogFragment implements View.OnClickListener {
+public class ConfirmNoteDeleteDialog extends DialogFragment implements View.OnClickListener {
     Dialog dialog;
 
     Button cancel;
@@ -23,7 +23,7 @@ public class ConfirmSubjectDeleteDialog extends DialogFragment implements View.O
 
     ArrayList<Integer> selected = new ArrayList();
 
-    public ConfirmSubjectDeleteDialog() {
+    public ConfirmNoteDeleteDialog() {
 
     }
 
@@ -71,18 +71,24 @@ public class ConfirmSubjectDeleteDialog extends DialogFragment implements View.O
     }
 
     public void confirmDelete() {
-        ArrayList<Subject> deleteMe = new ArrayList<>();
+        ArrayList<Note> deleteMeNote = new ArrayList<>();
+        ArrayList<Note> deleteMeMain = new ArrayList<>();
         for (int i : selected) {
-            deleteMe.add(MainActivity.subjects.get(i));
+            deleteMeMain.add(MainActivity.subjects.get(NotecardActivity.subjectPos).getSections().get(NotecardActivity.sectionPos).getNoteCards().get(i));
+            deleteMeNote.add(NotecardActivity.subjects.get(NotecardActivity.subjectPos).getSections().get(NotecardActivity.sectionPos).getNoteCards().get(i));
         }
 
-        for (Subject sub : deleteMe) {
-            MainActivity.subjects.remove(sub);
+        for (Note note : deleteMeMain) {
+            MainActivity.subjects.get(NotecardActivity.subjectPos).getSections().get(NotecardActivity.sectionPos).getNoteCards().remove(note);
+
         }
+        for (Note note : deleteMeNote) {
+            NotecardActivity.subjects.get(NotecardActivity.subjectPos).getSections().get(NotecardActivity.sectionPos).getNoteCards().remove(note);
+        }
+
         for (Fragment frag : getActivity().getSupportFragmentManager().getFragments()) {
-            if (frag instanceof SubjectFragment) {
-                ((SubjectFragment) frag).redrawList();
-                return;
+            if (frag instanceof NotecardActivity.PlaceholderFragment) {
+                ((NotecardActivity.PlaceholderFragment) frag).refreshContent();
             }
         }
 

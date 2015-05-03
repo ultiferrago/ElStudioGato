@@ -20,7 +20,6 @@ public class SubjectFragment extends Fragment implements MainActivity.ElGatoFrag
     SubjectAdapter adapter;
 
     public SubjectFragment() {
-
     }
 
     @Override
@@ -30,12 +29,15 @@ public class SubjectFragment extends Fragment implements MainActivity.ElGatoFrag
             MainActivity.subjects = savedInstanceState.getParcelableArrayList(MainActivity.SUBJECS_KEY);
         }
         setHasOptionsMenu(true);
+
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         // Inflate the menu; this adds items to the action bar if it is present.
         inflater.inflate(R.menu.menu_subject, menu);
+
     }
 
     @Override
@@ -75,10 +77,12 @@ public class SubjectFragment extends Fragment implements MainActivity.ElGatoFrag
 
 
         //Get the list view, create an adapter and set it.
-        lv = (ListView)rootView.findViewById(R.id.subjectView);
+        lv = (ListView) rootView.findViewById(R.id.subjectView);
         adapter = new SubjectAdapter(this.getActivity(), MainActivity.subjects);
         lv.setAdapter(adapter);
-
+        if (getActivity() != null) {
+            ((MainActivity) getActivity()).setActionBarTitle("Subjects");
+        }
         return rootView;
     }
 
