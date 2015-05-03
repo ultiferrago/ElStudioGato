@@ -1,0 +1,62 @@
+@startsalt
+{
+{T
++ Show Sections
+++  Goal
++++ Display all sections for a certain subject.
+++ Entry conditions
++++ A subject has been selected.
+++ Scenario
++++ The user will select a certain subject.
++++ The application will show all the sections.
+++ Exceptions
++++ The user has no sections created.
+++ Exit conditions
++++ Successful Exit Conditions
+++++ List of sections appears.
++++ Failure Exit Conditions
+++++ None
+}
+---
+{T
++ Add Sections
+++  Goal
++++ Add a section to a subject.
+++ Entry conditions
++++ The user has selected a subject.
+++ Scenario
++++ The user will click add section.
++++ The user will type in the name of the section.
++++ The user will click create.
+++ Exceptions
++++ The user clicks cancel when creating a section.
++++ The user doesn't fill out a name, but still wants to create.
+++ Exit conditions
++++ Successful Exit Conditions
+++++ The list will update with the new section added.
++++ Failure Exit Conditions
+++++ If there is no name for the section
++++++A warning comes up.
+}
+---
+{T
++ Delete Section
+++  Goal
++++ Remove a section(s) for the user.
+++ Entry conditions
++++ The user has selected a subject.
+++ Scenario
++++ The user will click delete section.
++++ The user will select the name of the sections(s).
++++ The user will click delete.
++++ The user will confirm delete.
+++ Exceptions
++++ The user clicks cancel when deleting a section.
+++ Exit conditions
++++ Successful Exit Conditions
+++++ The selected section(s) will not appear anymore.
++++ Failure Exit Conditions
+++++None
+}
+}
+@endsalt

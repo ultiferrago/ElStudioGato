@@ -4,22 +4,28 @@ Actor Storage
 
 rectangle System {
 User -- (Load Splash)
-(Load Splash) .. (Show Subject) : <<Extends>>
-(Show Subject) .. (Add Subject) : <<Extends>>
+(Load Splash) .. (Show Subject) : <<Includes>>
+(Show Subject) .. (Add Subject) : <<Includes>>
+(Show Subject) .. (Delete Subject) :  <<Includes>>
 (Show Subject) -- Storage
 (Show Section) -- Storage
 (Show Section) -- User
-(Show Section) .. (Add Section) : <<Extends>>
+(Show Section) .. (Add Section) : <<Includes>>
+(Show Section) .. (Delete Section) : <<Includes>>
 (Show Cards) -- Storage
 (Show Cards) -- User
-(Show Cards) .. (Edit Cards) : <<Extends>>
-(Show Cards) .. (Delete Cards) : <<Extends>>
-(Show Cards) .. (Add Cards) : <<Extends>>
-(Show Cards) .. (Show Answer) : <<Extends>>
-(Show Answer) .. (Mark Wrong) : <<Extends>>
-(Show Answer) .. (Mark Right) : <<Extends>>
-(Mark Wrong) .. (Show Statics) : <<Extends>>
-(Mark Right) .. (Show Statics) : <<Extends>>
+(Show Cards) .. (Edit Cards) : <<Includes>>
+(Show Cards) .. (Delete Cards) : <<Includes>>
+(Show Cards) .. (Add Cards) : <<Includes>>
+(Show Cards) .. (Show Answer) : <<Includes>>
+(Show Answer) .. (Mark Wrong) : <<Includes>>
+(Show Answer) .. (Mark Right) : <<Includes>>
+(Mark Wrong) .. (Show Statics) : <<Includes>>
+(Mark Right) .. (Show Statics) : <<Includes>>
+(Mark Wrong) .. (Retest Wrong) : <<Includes>>
+(Mark Right) .. (All Correct) : <<Includes>>
+(Show Answer) .. (Retest All) : <<Includes>>
+(All Correct) .. (Fling Cat) : <<Includes>>
 (Show Statics) -- (Storage)
 }
 

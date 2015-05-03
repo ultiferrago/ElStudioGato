@@ -1,0 +1,86 @@
+@startsalt
+{
+{T
++ Show Flashcards
+++  Goal
++++ Display all the flashcards for a certain section.
+++ Entry conditions
++++ A section has been selected.
+++ Scenario
++++ The user will select a certain section.
++++ The application will show flashcards for the section.
+++ Exceptions
++++ The user created no flashcards.
+++ Exit conditions
++++ Successful Exit Conditions
+++++ List of flashcards appear on the screen.
++++ Failure Exit Conditions
+++++ None
+}
+---
+{T
++ Add Flashcard
+++  Goal
++++ Add a flashcard to a section
+++ Entry conditions
++++ The user has selected a section.
+++ Scenario
++++ The user will click add flashcard.
++++ The user will type in the question of the flashcard.
++++ The user will type int the answer of the flashcard.
++++ The user will click create flashcard.
+++ Exceptions
++++ The user clicks outside to screen to cancel.
++++ The user doesn't fill out a question or answer, but still wants to create.
+++ Exit conditions
++++ Successful Exit Conditions
+++++ The screen will display the question of the card on screen.
++++ Failure Exit Conditions
+++++ If the question or answer is left blank.
++++++A warning comes up.
+}
+---
+{T
++ Delete Flashcard(s)
+++  Goal
++++ Remove a flashcard(s) from a section.
+++ Entry conditions
++++ The user has selected a section.
+++ Scenario
++++ The user will click delete flashcard.
++++ The user will select the questions of the flashcard(s).
++++ The user will click delete.
++++ The user will confirm delete.
+++ Exceptions
++++ The user clicks cancel when deleting a flashcard(s).
+++ Exit conditions
++++ Successful Exit Conditions
+++++ The selected flashcard(s) will not appear anymore.
++++ Failure Exit Conditions
+++++None
+}
+---
+{T
++ Edit Flashcard(s)
+++  Goal
++++ Edit flashcard(s) from a section.
+++ Entry conditions
++++ The user has selected a section.
+++ Scenario
++++ The user will click edit flashcard.
++++ All the flashcards in the section will appear on screen.
++++ The user will find the card they want to edit.
+++++ The user will change the question.
+++++ The user will change the answer.
++++ The user will save the changes.
+++ Exceptions
++++ The user leaves the question or answer blank.
+++ Exit conditions
++++ Successful Exit Conditions
+++++ The changed flashcard(s) will be updated.
++++ Failure Exit Conditions
+++++ If the answer or question left blank
++++++ A warning message appears.
+}
+}
+@endsalt

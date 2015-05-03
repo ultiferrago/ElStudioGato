@@ -1,0 +1,62 @@
+@startsalt
+{
+{T
++ Show Subjects
+++  Goal
++++ Display all the subjects for the user.
+++ Entry conditions
++++ The splash screen has finished.
+++ Scenario
++++ The user has stated the application.
++++ The application pops up with the splash screen.
+++ Exceptions
++++ The user has no subjects created.
+++ Exit conditions
++++ Successful Exit Conditions
+++++ List of Subjects appears.
++++ Failure Exit Conditions
+++++ None
+}
+---
+{T
++ Add Subjects
+++  Goal
++++ Add a subject for the user.
+++ Entry conditions
++++ The subject list has loaded.
+++ Scenario
++++ The user will click add subject.
++++ The user will type in the name of the subject.
++++ The user will click create.
+++ Exceptions
++++ The user clicks cancel when creating a subject.
++++ The user doesn't fill out a name, but still wants to create.
+++ Exit conditions
++++ Successful Exit Conditions
+++++ The list will update with the new subject added.
++++ Failure Exit Conditions
+++++ If there is no name for the subject
++++++A warning comes up.
+}
+---
+{T
++ Delete Subjects
+++  Goal
++++ Remove a subject(s) for the user.
+++ Entry conditions
++++ The subject list has loaded.
+++ Scenario
++++ The user will click delete subject.
++++ The user will select the name of the subject(s).
++++ The user will click delete.
++++ The user will confirm delete.
+++ Exceptions
++++ The user clicks cancel when deleting a subject.
+++ Exit conditions
++++ Successful Exit Conditions
+++++ The selected subject(s) will not appear anymore.
++++ Failure Exit Conditions
+++++None
+}
+}
+@endsalt
