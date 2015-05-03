@@ -1,32 +1,39 @@
 @startuml
-Actor User
-Actor Storage
+Actor user
 
+Actor storage
 rectangle System {
-User -- (Load Splash)
-(Load Splash) .. (Show Subject) : <<Includes>>
-(Show Subject) .. (Add Subject) : <<Includes>>
-(Show Subject) .. (Delete Subject) :  <<Includes>>
-(Show Subject) -- Storage
-(Show Section) -- Storage
-(Show Section) -- User
-(Show Section) .. (Add Section) : <<Includes>>
-(Show Section) .. (Delete Section) : <<Includes>>
-(Show Cards) -- Storage
-(Show Cards) -- User
-(Show Cards) .. (Edit Cards) : <<Includes>>
-(Show Cards) .. (Delete Cards) : <<Includes>>
-(Show Cards) .. (Add Cards) : <<Includes>>
-(Show Cards) .. (Show Answer) : <<Includes>>
-(Show Answer) .. (Mark Wrong) : <<Includes>>
-(Show Answer) .. (Mark Right) : <<Includes>>
-(Mark Wrong) .. (Show Statics) : <<Includes>>
-(Mark Right) .. (Show Statics) : <<Includes>>
-(Mark Wrong) .. (Retest Wrong) : <<Includes>>
-(Mark Right) .. (All Correct) : <<Includes>>
-(Show Answer) .. (Retest All) : <<Includes>>
-(All Correct) .. (Fling Cat) : <<Includes>>
-(Show Statics) -- (Storage)
+(load splash) ..> (show subject) : <<includes>>
+(show subject) ..> (add) : <<includes>>
+(show subject) ..> (delete) :  <<includes>>
+(show subject) -- storage
+(show subject) ..> (edit) : <<includes>>
+
+(show section) -- storage
+(show section) -- user
+(show section) ..> (edit) : <<includes>>
+
+(show section) ..> (test) : <<includes>>
+(test) ..> (show question) : <<includes>>
+(show flashcards) ..> (show question) : <<includes>>
+(show section) ..> (add) : <<includes>>
+(show section) ..> (delete) : <<includes>>
+(show question) .. (show answer) : contains
+
+(show flashcards) -- storage
+(show flashcards) -- user
+(show flashcards) ..> (edit) : <<includes>>
+(show flashcards) ..> (delete) : <<includes>>
+(show flashcards) ..> (add) : <<includes>>
+(show flashcards) ..> (show answer) : <<includes>>
+
+(show answer) ..> (mark wrong) : <<includes>>
+(show answer) ..> (mark right) : <<includes>>
+(mark wrong) ..> (show statics) : <<includes>>
+(mark right) ..> (show statics) : <<includes>>
+
+(show answer) ..> (retest all) : <<includes>>
+(show answer) ..> (retest wrong) : <<includes>>
 }
 
 

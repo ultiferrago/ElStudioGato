@@ -1,13 +1,137 @@
-@startuml
-salt
+@startsalt
 {
-  Just plain text
-  [This is my button]
-  ()  Unchecked radio
-  (X) Checked radio
-  []  Unchecked box
-  [X] Checked box
-  "Enter text here   "
-  ^This is a droplist^
+{T
++ Show Question
+++  Goal
++++ To display the question for the user.
+++ Entry conditions
++++ The user is ready for test mode.
+++ Scenario
++++ The user selects a section
++++ The question will appear on the screen.
+++ Exceptions
++++ The section has no flashcards.
+++ Exit conditions
++++ Successful Exit Conditions
+++++ The question will appear on a screen
++++ Failure Exit Conditions
+++++ Display warning
 }
-@enduml
+---
+{T
++ Show Answer
+++  Goal
++++ To display the correct answer to a question.
+++ Entry conditions
++++ The user has answered the question.
+++ Scenario
++++ The user will read the question.
++++ The user will determine their answer.
++++ The user will tap the screen to see the answer.
++++ The screen will now display the correct answer.
+++ Exceptions
++++ None
+++ Exit conditions
++++ Successful Exit Conditions
+++++ The answer to the question appears on screen.
++++ Failure Exit Conditions
+++++ None
+}
+---
+{T
++ Mark Right
+++  Goal
++++ To keep track of the questions the user gets right.
+++ Entry conditions
++++ The user is looking at the correct answer.
+++ Scenario
++++ The user will tap the screen to get the correct answer.
++++ The user will determine if they got the question right.
++++ The user will click the green box.
+++ Exceptions
++++ None
+++ Exit conditions
++++ Successful Exit Conditions
+++++ The flashcard will turn green.
++++ Failure Exit Conditions
+++++ None
+}
+---
+{T
++ Mark Wrong
+++  Goal
++++ To keep track of the questions the user gets wrong.
+++ Entry conditions
++++ The user is looking at the correct answer.
+++ Scenario
++++ The user will tap the screen to get the correct answer.
++++ The user will determine if they got the question wrong.
++++ The user will click the red box.
+++ Exceptions
++++ None
+++ Exit conditions
++++ Successful Exit Conditions
+++++ The flashcard will turn red.
++++ Failure Exit Conditions
+++++ None
+}
+---
+{T
++ Retest All
+++  Goal
++++ To give the user the opportunity to go back over all the flashcards in the list.
+++ Entry conditions
++++ The user has selected the section(s) to test on.
+++ Scenario
++++ The list of flashcards is displayed to the user.
++++ The user has two choices:
+++++ They can go through the test and retest at the end,
+++++ or they can retest at any point in the test.
+++ Exceptions
++++ There are no flashcards in a list.
+++ Exit conditions
++++ Successful Exit Conditions
+++++ The flashcards will only display the questions.
++++ Failure Exit Conditions
+++++ Display a warning if no flashcards are in the list.
+}
+---
+{T
++ Retest Wrong
+++  Goal
++++ To give the user the opportunity to go back over all the flashcards they have missed in the list.
+++ Entry conditions
++++ The user has selected the section(s) to test on.
+++ Scenario
++++ The list of flashcards is displayed to the user.
++++ The user goes through the test.
++++ The user will then click retest wrong at the end of the test.
+++ Exceptions
++++ If the user gets all the questions correct.
+++ Exit conditions
++++ Successful Exit Conditions
+++++ The flashcards marked incorrect will display.
++++ Failure Exit Conditions
+++++ None.
+}
+---
+{T
++ Show Statistics
+++  Goal
++++ To display to the right vs wrong percentage to the user.
+++ Entry conditions
++++ The user is taking a test.
+++ Scenario
++++ The user has determined their answer right or wrong.
++++ The statistical value has been updated accordingly.
+++ Exceptions
++++ None.
+++ Exit conditions
++++ Successful Exit Conditions
+++++ The new statistics is displayed on the screen.
++++ Failure Exit Conditions
+++++ None.
+}
+
+}
+@endsalt
