@@ -17,11 +17,14 @@ import edu.auburn.eng.csse.comp3710.team6.database.DummyDatabase;
 
 public class MainActivity extends ActionBarActivity {
 
-    public static final String FRAGMENT_SUBJECT = "SubjectFragment";
-    public static final String FRAGMENT_SECTION = "SectionFragment";
+    public interface ElGatoFragment {
+        public void redrawList();
+    }
 
-    public static final String SUBJECT_POSITION_KEY = "SubjectPosition";
-    public static final String SECTION_POSITION_KEY = "SectionPosition";
+    public static final String CURRENT_SUBJECT_KEY = "CURRENT_SUBJECT";
+    public static final String CURRENT_SECTION_KEY = "CURRENT_SUBJECT";
+    public static final String SUBJECS_KEY = "SUBJECTS";
+
 
     public static Subject currentSub = null;
 
@@ -38,13 +41,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //Will move all this to splash screen. //////////////////////
-        subjects = DatabaseHelper.getInstance(this).getSubjects(); //
-        if (subjects.isEmpty()) {                                  //
-            subjects = DummyDatabase.getDummySubjects();           //
-        }                                                          //
-        /////////////////////////////////////////////////////////////
-
         if (savedInstanceState == null) {
             toSubjectFragment();
         }
@@ -53,22 +49,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-        DatabaseHelper.getInstance(this).saveDatabase(subjects);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle bundle) {
-        super.onSaveInstanceState(bundle);
-        DatabaseHelper.getInstance(this).saveDatabase(subjects);
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
         DatabaseHelper.getInstance(this).saveDatabase(subjects);
     }
+
+
 
 
     @Override
@@ -88,25 +74,17 @@ public class MainActivity extends ActionBarActivity {
 
                 getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.main_frag_container, new SectionFragment(subject))
+                .replace(R.id.main_frag_container, new SectionFragment())
                 .addToBackStack(null)
                 .commit();
     }
 
-    public void toSectionFragmentNoBack(Subject subject) {
-        currentSub = subject;
-
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.main_frag_container, new SectionFragment(subject))
-                .commit();
-    }
 
 
     public void toNoteActivity(Section sec) {
         Intent i = new Intent(this, NotecardActivity.class);
-        i.putExtra(SUBJECT_POSITION_KEY, subjects.indexOf(currentSub));
-        i.putExtra(SECTION_POSITION_KEY, currentSub.getSections().indexOf(sec));
+        i.putExtra(CURRENT_SUBJECT_KEY, currentSub);
+        i.putExtra(CURRENT_SECTION_KEY, sec);
         i.putExtra("SubjectArray", subjects);
         startActivity(i);
     }

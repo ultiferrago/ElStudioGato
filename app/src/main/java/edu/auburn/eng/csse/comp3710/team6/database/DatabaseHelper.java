@@ -20,6 +20,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Singleton Instance
     private static DatabaseHelper m_instance;
 
+    private long lastUpdateTime = 0;
+
     //Database infromation.
     private static final String DB_NAME = "StudyManager"; // Database name
     private static final int VERSION = 1; // Used to rebuild database if we make changes to structure.
@@ -126,7 +128,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * Writes the current cached information into the database.
      */
     public void saveDatabase(ArrayList<Subject> subjects) {
-        Log.i("Database", "Saving database");
+        if (System.currentTimeMillis() - lastUpdateTime < 15000) {
+            //If the last save time was less than 60 seconds ago.
+            return;
+        }
+        lastUpdateTime = System.currentTimeMillis();
         SQLiteDatabase db = this.getWritableDatabase(); //Database
 
         //We want to make sure the database matches perfectly so lets just delete everything in the table and rewrite it.
@@ -160,7 +166,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
 
         }
-        Log.i("Database", "Database saved!");
+        //Log.i("Database", "Database saved!");
     }
 
     public ArrayList<Subject> getSubjects() {
@@ -274,22 +280,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(TABLE_SECTIONS_KEY_SUBJECT, sectionSubject);
 
         return values;
-    }
-
-    public ArrayList<Subject> getAllSubjects() {
-
-        String[]columns = new String[]{ TABLE_SUBJECTS_KEY_NAME};
-        SQLiteDatabase myDB = this.getReadableDatabase();
-        Cursor c = myDB.query(TABLE_SUBJECTS, columns, null, null, null, null, null);
-        ArrayList<Subject> result = new ArrayList<>();
-
-        int iSubject = c.getColumnIndex(TABLE_SUBJECTS_KEY_NAME);
-
-        for(c.moveToFirst(); !c.isAfterLast(); c.moveToNext()) {
-            result.add(new Subject(c.getString(iSubject)));
-        }
-
-        return result;
     }
 
 

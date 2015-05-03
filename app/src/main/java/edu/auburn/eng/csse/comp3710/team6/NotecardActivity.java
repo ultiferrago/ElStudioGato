@@ -33,31 +33,17 @@ public class NotecardActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notecard_frag_holder);
 
-        /*JsonStorage jsonStorage = new JsonStorage(this);
-        try {
-            String notecardJSON = jsonStorage.readNotecardsAsset();
-            Log.d("KENNY", "Drink JSON: " + notecardJSON);
-            notecardList = jsonStorage.createNotecardItem(notecardJSON);
-            Log.d("KENNY", "Success!");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException ej) {
-            Log.d("KENNY", "JSON Failed: " + ej);
-            ej.printStackTrace();
-        }*/
-
         if (savedInstanceState == null) {
-            int subPos = getIntent().getIntExtra(MainActivity.SUBJECT_POSITION_KEY, 0);
-            int sectionPos = getIntent().getIntExtra(MainActivity.SECTION_POSITION_KEY, 0);
-            ArrayList<Subject> subjects = getIntent().getParcelableArrayListExtra("SubjectArray");
-            for (Subject quinnsMom : subjects) {
-                Toast.makeText(this, quinnsMom.getSubjectName(), Toast.LENGTH_SHORT).show();
-            }
-            notecardList = MainActivity.subjects.get(subPos).getSections().get(sectionPos).getNoteCards();
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment(notecardList))
-                    .commit();
-            Log.i("Notecards", "Bundle was null");
+            //int subPos = getIntent().getIntExtra(MainActivity.SUBJECT_POSITION_KEY, 0);
+            //int sectionPos = getIntent().getIntExtra(MainActivity.SECTION_POSITION_KEY, 0);
+            //ArrayList<Subject> subjects = getIntent().getParcelableArrayListExtra("SubjectArray");
+
+            //notecardList = subjects.get(subPos).getSections().get(sectionPos).getNoteCards();
+
+            //getSupportFragmentManager().beginTransaction()
+                    //.add(R.id.container, new PlaceholderFragment(notecardList))
+                    //.commit();
+
         }
     }
 
@@ -122,7 +108,7 @@ public class NotecardActivity extends ActionBarActivity {
             mRecyclerView.setLayoutManager(mLayoutManager);
 
             // specify an adapter (see also next example)
-            mAdapter = new NotecardAdapter(notecardList, getActivity());
+            mAdapter = new NotecardAdapter(notecardList);
             mRecyclerView.setAdapter(mAdapter);
             return rootView;
         }

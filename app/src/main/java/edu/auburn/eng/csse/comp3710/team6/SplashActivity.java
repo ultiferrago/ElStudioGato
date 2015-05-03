@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 import edu.auburn.eng.csse.comp3710.team6.database.DatabaseHelper;
 import edu.auburn.eng.csse.comp3710.team6.database.DummyDatabase;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 /**
  * Created by kennystreit on 4/29/15.
@@ -24,6 +29,11 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.splash_layout);
 
         //Real quick lets initialize the database.
+
+        //Realm independent
+        ArrayList<Subject> temp = new ArrayList();
+
+
         MainActivity.subjects = DatabaseHelper.getInstance(this).getSubjects();
         if (MainActivity.subjects.isEmpty() && fakeData) {
             MainActivity.subjects = DummyDatabase.getDummySubjects();

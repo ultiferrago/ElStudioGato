@@ -1,30 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical" android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
 
-    <ScrollView
+    <ListView
         android:layout_width="fill_parent"
-        android:layout_height="300dp"
-        android:id="@+id/custom_delete_dialog_listview" />
+        android:layout_height="200dp"
+        android:id="@+id/custom_delete_dialog_listview"
+        android:fadeScrollbars="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:footerDividersEnabled="false" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="wrap_content">
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"
             android:id="@+id/custom_delete_dialog_cancel"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/list_button"
+            android:textColor="#ffffffff"
+            android:layout_marginRight="1dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Delete"
             android:id="@+id/custom_delete_dialog_delete"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/list_button"
+            android:textColor="#ffffffff"
+            android:layout_marginLeft="1dp" />
     </LinearLayout>
 </LinearLayout>

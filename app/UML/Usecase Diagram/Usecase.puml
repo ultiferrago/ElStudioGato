@@ -6,10 +6,12 @@ rectangle System {
 User -- (Load Splash)
 (Load Splash) .. (Show Subject) : <<Includes>>
 (Show Subject) .. (Add Subject) : <<Includes>>
+(Show Subject) .. (Delete Subject) :  <<Includes>>
 (Show Subject) -- Storage
 (Show Section) -- Storage
 (Show Section) -- User
 (Show Section) .. (Add Section) : <<Includes>>
+(Show Section) .. (Delete Section) : <<Includes>>
 (Show Cards) -- Storage
 (Show Cards) -- User
 (Show Cards) .. (Edit Cards) : <<Includes>>

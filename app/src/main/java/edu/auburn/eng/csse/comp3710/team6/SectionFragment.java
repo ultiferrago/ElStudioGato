@@ -9,19 +9,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
+
 
 /**
  * A placehold fragment containing a simple list view.
  */
-public class SectionFragment extends Fragment {
+public class SectionFragment extends Fragment implements MainActivity.ElGatoFragment{
     Subject subject; //What subject are we inside of.
     private int position; //What position was this subject in the arraylist when clicked.
     SectionAdapter adapter;
     ListView lv;
 
-    public SectionFragment(Subject subject) {
-        this.subject = subject;
+    public SectionFragment() {
+        this.subject = MainActivity.currentSub;
         this.position = MainActivity.subjects.indexOf(subject);
     }
 
@@ -56,7 +56,7 @@ public class SectionFragment extends Fragment {
         int id = item.getItemId();
 
         if (id == R.id.menu_section_item_add) {
-            AddDialog dialog = new AddDialog(MainActivity.FRAGMENT_SECTION);
+            AddSubjectDialog dialog = new AddSubjectDialog();
             dialog.show(getFragmentManager(), "Apples");
         } else if (id == R.id.menu_section_item_delete) {
 
@@ -76,5 +76,10 @@ public class SectionFragment extends Fragment {
         lv.setAdapter(adapter);
 
         return rootView;
+    }
+
+    @Override
+    public void redrawList() {
+
     }
 }
