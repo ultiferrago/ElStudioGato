@@ -30,12 +30,35 @@ public class NotecardEditFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
 
-    DatabaseHelper dbHelper;
-    SQLiteDatabase myDB;
-
 
     public NotecardEditFragment() {
 
+    }
+
+    @Override
+    public void onCreate(Bundle resume) {
+        super.onCreate(resume);
+
+        if (resume != null) {
+            mAdapter = new NotecardEditAdapter(resume.<Note>getParcelableArrayList("notecards"));
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle save) {
+        super.onSaveInstanceState(save);
+        int notecardListIndex = 0;
+        ArrayList<Note> notes = new ArrayList();
+        for (int i = 0; i < mRecyclerView.getAdapter().getItemCount() * 2; i += 2) {
+            EditText question = (EditText) mRecyclerView.findViewById(i);
+            String questString = question.getText().toString();
+            EditText answer = (EditText) mRecyclerView.findViewById(i + 1);
+            String ansString = answer.getText().toString();
+
+            notes.add(new Note(questString, ansString));
+            notecardListIndex++;
+        }
+        save.putParcelableArrayList("notecards", notes);
     }
 
     @Override
@@ -60,8 +83,10 @@ public class NotecardEditFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         // specify an adapter (see also next example)
-       mAdapter = new NotecardEditAdapter(NotecardActivity.subjects.get(NotecardActivity.subjectPos).getSections().get(NotecardActivity.sectionPos).getNoteCards());
-       mRecyclerView.setAdapter(mAdapter);
+        if (mAdapter == null) {
+            mAdapter = new NotecardEditAdapter(NotecardActivity.subjects.get(NotecardActivity.subjectPos).getSections().get(NotecardActivity.sectionPos).getNoteCards());
+        }
+        mRecyclerView.setAdapter(mAdapter);
 
         setHasOptionsMenu(true);
 
@@ -103,4 +128,6 @@ public class NotecardEditFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
     }
+
+
 }

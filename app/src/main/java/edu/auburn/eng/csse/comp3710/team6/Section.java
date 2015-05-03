@@ -81,7 +81,7 @@ public class Section implements Parcelable {
      * @return - list of note cards.
      */
     public ArrayList<Note> getNoteCards() {
-        return (ArrayList<Note>) notes.clone();
+        return notes;
     }
 
     public static final Parcelable.Creator<Section> CREATOR = new Parcelable.Creator<Section>() {

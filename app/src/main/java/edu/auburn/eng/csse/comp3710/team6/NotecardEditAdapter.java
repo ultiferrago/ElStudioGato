@@ -60,7 +60,6 @@ public class NotecardEditAdapter extends RecyclerView.Adapter<NotecardEditAdapte
 
         holder.mQuestion.setText(notecardList.get(position).getFront());
         holder.mAnswer.setText(notecardList.get(position).getBack());
-        Log.d("KENNY", "Question: " + notecardList.get(position).getFront());
     }
 
     // Return the size of your dataset (invoked by the layout manager)

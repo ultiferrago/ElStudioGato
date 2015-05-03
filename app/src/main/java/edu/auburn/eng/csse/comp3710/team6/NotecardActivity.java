@@ -59,6 +59,7 @@ public class NotecardActivity extends ActionBarActivity {
     }
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +82,14 @@ public class NotecardActivity extends ActionBarActivity {
 
     }
 
+    public void refresh() {
+        for (Fragment frag : getSupportFragmentManager().getFragments()) {
+            if (frag instanceof PlaceholderFragment) {
+                ((PlaceholderFragment)frag).refreshContent();
+            }
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -101,7 +110,12 @@ public class NotecardActivity extends ActionBarActivity {
                     return true;
                 }
             case R.id.delete:
-                Toast.makeText(getApplicationContext(), "Delete Clicked!", Toast.LENGTH_SHORT).show();
+                if (subjects.get(subjectPos).getSections().get(sectionPos).getNoteCards().isEmpty()) {
+                    Toast.makeText(this, "No notecards to delete! Why not try creating one?", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                DeleteNoteDialog dnl = new DeleteNoteDialog();
+                dnl.show(getSupportFragmentManager(), "");
                 return true;
 
             default:
@@ -185,47 +199,15 @@ public class NotecardActivity extends ActionBarActivity {
         }
 
         private void createNoteDialog() {
-            final Dialog dialog = new Dialog(getActivity());
-            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.notecard_dialog_layout);
-            final EditText question = (EditText) dialog.findViewById(R.id.question);
-            final EditText answer = (EditText) dialog.findViewById(R.id.answer);
-            dialog.findViewById(R.id.save_notecard).setOnClickListener(
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View arg0) {
-                            // create new item from dialog text
-                            String questString = question.getText().toString();
-                            questString = questString.replaceAll(" ", "");
-                            questString = questString.replaceAll("\n", "");
-
-                            String answerString = answer.getText().toString();
-                            answerString = answerString.replaceAll(" ", "");
-                            answerString = answerString.replaceAll("\n", "");
-
-                            if (!questString.equals("") || !answerString.equals("")) {
-                                Note note = new Note();
-                                note.setFront(question.getText().toString());
-                                note.setBack(answer.getText().toString());
-                                subjects.get(subjectPos).getSections().get(sectionPos).addNote(note);
-                                MainActivity.subjects.get(subjectPos).getSections().get(sectionPos).addNote(note);
-                                refreshContent();
-                                dialog.dismiss();
-                            } else
-                                Toast.makeText(getActivity(),
-                                        "You must enter atleast question or an answer", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            dialog.setCanceledOnTouchOutside(true);
-            dialog.show();
+            AddNoteDialog dialog = new AddNoteDialog();
+            dialog.show(getFragmentManager(), "");
         }
 
         /******************************************************************************************
          * Refreshes the subject list
          * The 2000 is sort of a 'dummy' value to make refresh seem like its doing a lot haha
          ******************************************************************************************/
-        private void refreshContent() {
+        public void refreshContent() {
 
             Toast.makeText(getActivity(), "Restarting...", Toast.LENGTH_SHORT).show();
             new Handler().postDelayed(new Runnable() {
