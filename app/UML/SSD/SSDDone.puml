@@ -1,0 +1,57 @@
+@startuml
+Student -> System : start
+activate Student
+activate System
+
+opt
+System -> Storage : retrieve previous info
+activate Storage
+Storage --> System : return previous info
+deactivate Storage
+System -> Student : display previous info
+end
+
+loop until done
+Student -> System : create class tab
+System --> Student : display class card
+activate Storage
+System --> Storage : save
+deactivate Storage
+end
+
+loop until done
+Student -> System : create section tab
+System --> Student : display section card
+activate Storage
+System --> Storage : save
+deactivate Storage
+end
+
+loop until done
+Student -> System : create flashcard
+System --> Student : display flashcard
+activate Storage
+System --> Storage : save
+deactivate Storage
+end
+
+group take test
+loop
+loop
+System --> Student : display question
+Student -> System : want answer
+System --> Student : display answer
+Student -> System : correct/incorrect
+
+activate Storage
+System -> Storage : save correct/incorrect
+deactivate Storage
+end
+Student -> System : retake
+opt
+System --> Student : display only wrong answers
+end
+end
+end
+
+@enduml

@@ -1,19 +1,19 @@
 @startuml
 
 Class Student
-package ElStudioGato <<React>> {
+
 Class FlashCards
 Class Questions
 Class Answers
-Class Edit
 
-Student"1" -- "1"Edit : Can
-Student"1" o-- "+"FlashCards : Interacts with
-FlashCards"1" o-- "1"Questions : has
-FlashCards"1" o-- "1"Answers : has
-Answers"1" *-- "1"Wrong : has
-Answers"1" *-- "1"Right : has
-Edit"1" -- "+"FlashCards : Changes
+
+Student"1" -- "+"FlashCards : Interacts with >
+
+FlashCards"1" o-- "1"Questions : has >
+FlashCards"1" o-- "1"Answers : has >
+Answers"1" *-- "1"Wrong : has >
+Answers"1" *-- "1"Right : has >
+
 
 
 @enduml

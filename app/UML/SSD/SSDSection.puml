@@ -3,10 +3,10 @@ User -> System : Selected Subject
 activate User
 activate System
 group Has Sections
-System -> Server : Request Information
-activate Server
-Server --> System : Return Information
-deactivate Server
+System -> Database : Request Information
+activate Database
+Database --> System : Return Information
+deactivate Database
 System --> User : Display Sections
 User -> System : Select Sections
 end
@@ -15,11 +15,11 @@ group Has No Sections
 System --> User : Display Add Sections
 loop Until Done
 User -> System : Add Sections
-System -> Server : Request Save
-activate Server
-Server --> System: Save Information
+System -> Database : Request Save
+activate Database
+Database --> System: Save Information
 end
-deactivate Server
+deactivate Database
 end
 
 @enduml
