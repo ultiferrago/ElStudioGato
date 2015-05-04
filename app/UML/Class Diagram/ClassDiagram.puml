@@ -1,0 +1,77 @@
+@startuml
+
+class SplashActivity {
+    onCreate()
+}
+class Subject {
+    subjects : ArrayList<Subject>
+    currentSubject : Subject
+    myDB : SQLiteDatabase
+    onCreateView()
+    showList()
+    refresh()
+}
+class SubjectAdapter {
+    subjects : ArrayList<Subject>
+    genereateList()
+    clickSubject()
+}
+class Section {
+    sections : ArrayList<Section>
+    currentSubject : Subject
+    myDB : SQLiteDatabase
+    onCreateView()
+    showList()
+    refresh()
+}
+class SectionAdapter {
+    section : ArrayList<Section>
+    genereateList()
+    clickSection()
+}
+class Notecard {
+    mRecyclerView : RecyclerView
+    mSwipeRefreshLayout : SwipeRefreshLayout
+    dbHelper : DatabaseHelper
+    myDB : SQLiteDatabase
+    notecardList : ArrayList<Note>
+    onCreateView()
+    createNoteDialog()
+    refreshContent()
+}
+class NotecardEdit {
+    dbHelper : DatabaseHelper
+    myDB : SQLiteDatabase
+    notecardList : ArrayList<Note>
+    mRecyclerView : RecyclerView
+    onCreateView()
+}
+class NotecardAdapter {
+    notecardList : ArrayList<Note>
+    correct : View
+    incorrect : View
+    genereateList()
+    clickCard()
+    showAnswer()
+}
+class Delete {
+    currentView : View
+    createDialog : Dialog
+    onCreateView()
+}
+
+Subject "1" o--- "*" Section : contains
+Section "1" o-- "*" Notecard : contains
+
+NotecardAdapter "1" -- "1" Notecard : <<create>>
+SubjectAdapter "1" -- "1" Subject : <<create>>
+SectionAdapter "1" -- "1" Section : <<create>>
+
+Delete -- "*" Subject : deletes
+Delete -- "*" Section : deletes
+Delete -- "*" Notecard : deletes
+
+SplashActivity  "1" -- "1" Subject : loads
+
+Notecard "*" -- NotecardEdit : ^ changes
+@enduml
