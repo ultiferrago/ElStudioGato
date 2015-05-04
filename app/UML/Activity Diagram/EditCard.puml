@@ -1,0 +1,15 @@
+@startuml
+title  elStudioGato Edit Cards
+
+
+(*) --> "Student presses Edit \non Flashcard Menu"
+--> "Student selects a card"
+--> "Student done editing card"
+if "Was card updated?" then
+     -->[yes]"System saves flashcard changes"
+     --> ===done===
+   else
+     --> [no]===done===
+endif
+
+@enduml

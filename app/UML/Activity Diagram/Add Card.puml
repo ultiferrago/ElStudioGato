@@ -1,0 +1,17 @@
+@startuml
+title  elStudioGato Add Card
+
+
+(*) --> "Student presses Plus \nbutton on Flashcard Menu"
+--> "Student inputs information for question/answer"
+--> "Student done editing card"
+if "Is card empty?" then
+     -->[no]"System saves flashcard changes"
+     --> ===done===
+   else
+     --> [yes]===done===
+endif
+
+--> "Display all cards"
+
+@enduml

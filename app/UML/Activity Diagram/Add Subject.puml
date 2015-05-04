@@ -1,0 +1,17 @@
+@startuml
+title  elStudioGato Add subject
+
+
+(*) --> "Student presses Plus \nbutton on Action Bar"
+--> "Student inputs information for name of subject"
+--> "Student done creating subject"
+if "Is information empty?" then
+     -->[no]"System saves flashcard changes"
+     --> ===done===
+   else
+     --> [yes]===done===
+endif
+
+--> "Display all subjects"
+
+@enduml

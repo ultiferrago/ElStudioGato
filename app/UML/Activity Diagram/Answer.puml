@@ -1,0 +1,18 @@
+@startuml
+title  elStudioGato Answer Selections Activity
+
+
+(*) --> "Student is in flashcard mode\nand presses on a card"
+--> "Flashcard shows answer\nand displays check and x button options"
+if "Student makes a selection" then
+     -->["Check" pressed]"Student got question right"
+     --> "Flashcard background set green"
+     --> ===done===
+   else
+     --> ["X" Pressed]"Student missed question"
+     --> "Flashcard background set red"
+     --> [X Pressed]===done===
+endif
+
+"At Any Point user pressed back" --> (*)
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+title  elStudioGato Delete Subject
+
+
+(*) --> "Student presses delete \non Subject Menu"
+--> "System asks if you really want to delete"
+if "Verified selection" then
+     -->[yes]"Delete subject from list"
+     --> ===done===
+   else
+     -->[no] ===done===
+endif
+
+--> "Display remaining subjects"
+
+@enduml

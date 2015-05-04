@@ -1,0 +1,17 @@
+@startuml
+title  elStudioGato Add section
+
+
+(*) --> "Student presses Plus \nbutton on Action Bar"
+--> "Student inputs information for name of section"
+--> "Student done creating section"
+if "Is information empty?" then
+     -->[no]"System saves flashcard changes"
+     --> ===done===
+   else
+     --> [yes]===done===
+endif
+
+--> "Display all sections"
+
+@enduml
