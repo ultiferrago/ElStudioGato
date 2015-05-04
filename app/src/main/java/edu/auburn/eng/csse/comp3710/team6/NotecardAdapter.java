@@ -1,9 +1,11 @@
 package edu.auburn.eng.csse.comp3710.team6;
 
+import android.app.Activity;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -20,9 +22,11 @@ import java.util.HashMap;
  */
 public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHolder> {
     private ArrayList<Note> notecardList;
-    private HashMap<Integer, String> selectedMap = new HashMap();
+    private static HashMap<Integer, String> selectedMap = new HashMap();
 
-    private String RIGHT = "right";
+    private TextView percent;
+
+    private static String RIGHT = "right";
     private String WRONG = "wrong";
     private String JUST_SELECTED = "";
 
@@ -47,9 +51,14 @@ public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHo
         }
     }
 
+    public void setTextView(TextView tv) {
+        percent = tv;
+    }
+
     // Provide a suitable constructor (depends on the kind of dataset)
-    public NotecardAdapter(ArrayList<Note> notecardList) {
+    public NotecardAdapter(TextView percent, ArrayList<Note> notecardList) {
         this.notecardList = notecardList;
+        this.percent = percent;
     }
 
     // Create new views (invoked by the layout manager)
@@ -96,7 +105,10 @@ public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHo
             @Override
             public void onClick(View v) {
                holder.background.setBackgroundResource(android.R.color.holo_green_light);
-                selectedMap.put((Integer)position, RIGHT);
+                selectedMap.put((Integer) position, RIGHT);
+
+                percent.setText(rightPercent() + "%");
+                percent.invalidate();
                //holder.cview.setBackground(v.getResources().getDrawable(R.drawable.right_background));
             }
         });
@@ -106,8 +118,9 @@ public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 holder.background.setBackgroundResource(android.R.color.holo_red_light);
-                selectedMap.put((Integer)position, WRONG);
-                //holder.cview.setBackground(v.getResources().getDrawable(R.drawable.wrong_background));
+                selectedMap.put((Integer) position, WRONG);
+                percent.setText(rightPercent() + "%");
+                percent.invalidate();
             }
         });
     }
@@ -134,5 +147,20 @@ public class NotecardAdapter extends RecyclerView.Adapter<NotecardAdapter.ViewHo
 
     public void updateNotes(ArrayList<Note> notes) {
         this.notecardList = notes;
+    }
+
+    public static int rightPercent() {
+        double total = selectedMap.size();
+        if (total <=0) {
+            total = 1;
+        }
+        double right = 0;
+        for (String temp : selectedMap.values()) {
+            if (temp == RIGHT) {
+                right++;
+            }
+        }
+
+        return (int)((right / total) * 100);
     }
 }

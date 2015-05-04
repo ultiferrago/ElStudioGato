@@ -21,7 +21,7 @@ public class SplashActivity extends Activity {
     /**
      * Duration of wait *
      */
-    private final int SPLASH_DISPLAY_LENGTH = 2000; //Increased time.
+    private final int SPLASH_DISPLAY_LENGTH = 5000; //Increased time.
     private final boolean fakeData = false;
 
     /**

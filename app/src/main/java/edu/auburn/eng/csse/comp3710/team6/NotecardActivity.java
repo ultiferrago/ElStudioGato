@@ -17,12 +17,14 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -70,7 +72,7 @@ public class NotecardActivity extends ActionBarActivity {
         subjectPos = getIntent().getIntExtra(MainActivity.SUBJECT_POSITION_KEY, 0);
 
         if (savedInstanceState != null) {
-            mAdapter = new NotecardAdapter(subjects.get(subjectPos).getSections().get(sectionPos).getNoteCards());
+            mAdapter = new NotecardAdapter(null, subjects.get(subjectPos).getSections().get(sectionPos).getNoteCards());
             mAdapter.setSelectedMap((HashMap<Integer, String>)savedInstanceState.getSerializable("selected"));
         } else {
             mAdapter = null;
@@ -81,6 +83,7 @@ public class NotecardActivity extends ActionBarActivity {
         }
 
     }
+
 
     public void refresh() {
         for (Fragment frag : getSupportFragmentManager().getFragments()) {
@@ -94,7 +97,7 @@ public class NotecardActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.notecard_menu, menu);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -149,9 +152,12 @@ public class NotecardActivity extends ActionBarActivity {
 
         SwipeRefreshLayout mSwipeRefreshLayout;
 
+        TextView percent;
         public PlaceholderFragment() {
-
+            this.setHasOptionsMenu(true);
         }
+
+
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -182,8 +188,11 @@ public class NotecardActivity extends ActionBarActivity {
 
             // specify an adapter (see also next example) if not yet created.
             if (mAdapter == null) {
-                mAdapter = new NotecardAdapter((ArrayList<Note>) subjects.get(subjectPos).getSections().get(sectionPos).getNoteCards().clone());
+                mAdapter = new NotecardAdapter(null, (ArrayList < Note >) subjects.get(subjectPos).getSections().get(sectionPos).getNoteCards().clone());
             }
+            percent = (TextView)rootView.findViewById(R.id.percentage_text);
+            mAdapter.setTextView(percent);
+            percent.setText(mAdapter.rightPercent() + "%");
             mRecyclerView.setAdapter(mAdapter);
 
             ImageView fab = (ImageView) rootView.findViewById(R.id.floating_action_button);
@@ -216,9 +225,11 @@ public class NotecardActivity extends ActionBarActivity {
                     //mAdapter = new NotecardAdapter(subjects.get(subjectPos).getSections().get(sectionPos).getNoteCards());
                     mAdapter.updateNotes(subjects.get(subjectPos).getSections().get(sectionPos).getNoteCards());
                     mAdapter.setSelectedMap(new HashMap());
+
                     mRecyclerView.setAdapter(mAdapter);
                     mRecyclerView.invalidate();
                     mSwipeRefreshLayout.setRefreshing(false);
+                    percent.setText("0%");
                 }
             }, 500);
         }
